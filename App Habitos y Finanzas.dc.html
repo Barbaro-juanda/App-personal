@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="src/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+html,body{margin:0;padding:0;background:#08080A;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#FF3A46;text-decoration:none}a:hover{color:#FF6B74}
+input{font-family:'IBM Plex Sans',system-ui,sans-serif}
+input::placeholder{color:#55555E}
+input:focus{outline:none;border-color:#FF3A46 !important}
+::-webkit-scrollbar{width:0;height:0}
+@keyframes scrIn{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pop{0%{transform:scale(.4);opacity:0}55%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes burst{0%{transform:scale(.5);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+@keyframes toastIn{0%{opacity:0;transform:translate(-50%,20px)}12%{opacity:1;transform:translate(-50%,0)}85%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-8px)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(255,58,70,.45)}70%{box-shadow:0 0 0 12px rgba(255,58,70,0)}100%{box-shadow:0 0 0 0 rgba(255,58,70,0)}}
+@keyframes rowIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="{{ theme }}">
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px;background:radial-gradient(1200px 700px at 50% -10%, #17171B 0%, #08080A 62%)">
+  <div style="width:390px;height:844px;position:relative;border-radius:46px;background:#0B0B0D;border:1px solid #232328;box-shadow:0 40px 90px rgba(0,0,0,.7), 0 0 0 9px #141417;overflow:hidden;display:flex;flex-direction:column">
+
+    <div style="position:absolute;top:0;left:0;right:0;height:54px;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:18px 26px 0;pointer-events:none">
+      <span style="font:600 13px 'Space Grotesk',sans-serif;color:#F4F4F5">9:41</span>
+      <div style="width:96px;height:26px;border-radius:14px;background:#000;position:absolute;left:50%;transform:translateX(-50%);top:12px"></div>
+      <div style="display:flex;align-items:center;gap:5px">
+        <svg width="17" height="11" sc-camel-view-box="0 0 17 11" fill="none"><rect x="0" y="7" width="3" height="4" rx="1" fill="#F4F4F5"></rect><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#F4F4F5"></rect><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#F4F4F5"></rect><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#F4F4F5"></rect></svg>
+        <svg width="24" height="12" sc-camel-view-box="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3.2" stroke="#6B6B75"></rect><rect x="2" y="2" width="14" height="8" rx="2" fill="#F4F4F5"></rect><path d="M22 4v4a2.2 2.2 0 0 0 0-4z" fill="#6B6B75"></path></svg>
+      </div>
+    </div>
+
+    <div style="flex:1;overflow-y:auto;overflow-x:hidden;padding:62px 0 108px;position:relative">
+
+      <sc-if value="{{ isHoy }}" hint-placeholder-val="{{ true }}">
+      <div style="animation:scrIn .34s cubic-bezier(.2,.9,.25,1);padding:0 20px">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px">
+          <div>
+            <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#75757F;margin-bottom:6px">{{ fechaLarga }}</div>
+            <div style="font:700 30px/1.05 'Space Grotesk',sans-serif;color:#F7F7F8;letter-spacing:-.02em">Hoy</div>
+          </div>
+          <div style="width:38px;height:38px;border-radius:50%;background:#17171B;border:1px solid #26262C;display:flex;align-items:center;justify-content:center;font:600 13px 'Space Grotesk',sans-serif;color:#B9B9C2">AV</div>
+        </div>
+
+        <div style="position:relative;border-radius:24px;padding:22px;background:linear-gradient(155deg,#161619 0%,#101013 100%);border:1px solid #26262C;overflow:hidden;margin-bottom:14px">
+          <div style="position:absolute;right:-60px;top:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle, rgba(255,58,70,.16) 0%, rgba(255,58,70,0) 70%)"></div>
+          <div style="display:flex;align-items:center;gap:20px;position:relative">
+            <div style="position:relative;width:92px;height:92px;flex:none">
+              <svg width="92" height="92" sc-camel-view-box="0 0 92 92">
+                <circle cx="46" cy="46" r="39" fill="none" stroke="#232329" stroke-width="9"></circle>
+                <circle cx="46" cy="46" r="39" fill="none" stroke="var(--acc,#FF3A46)" stroke-width="9" stroke-linecap="round" stroke-dasharray="245" stroke-dashoffset="{{ ringOffset }}" transform="rotate(-90 46 46)" style="transition:stroke-dashoffset 1.1s cubic-bezier(.2,.9,.25,1);filter:drop-shadow(0 0 8px rgba(255,58,70,.4))"></circle>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                <span style="font:700 24px 'Space Grotesk',sans-serif;color:#F7F7F8;line-height:1">{{ doneCount }}</span>
+                <span style="font:500 11px 'IBM Plex Sans',sans-serif;color:#75757F">de {{ totalCount }}</span>
+              </div>
+            </div>
+            <div style="flex:1">
+              <div style="font:600 15px 'IBM Plex Sans',sans-serif;color:#F7F7F8;margin-bottom:5px">{{ ringTitulo }}</div>
+              <div style="font:400 13px/1.45 'IBM Plex Sans',sans-serif;color:#8B8B95;text-wrap:pretty">{{ ringSub }}</div>
+              <div style="display:flex;gap:5px;margin-top:12px">
+                <sc-for list="{{ semana }}" as="d" hint-placeholder-count="7">
+                  <div style="{{ d.dotStyle }}"></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div sc-camel-on-click="{{ goDinero }}" style="border-radius:24px;padding:20px 22px;background:linear-gradient(150deg,#1D0F11 0%,#141417 55%);border:1px solid #3A1D21;margin-bottom:18px;cursor:pointer;transition:transform .18s cubic-bezier(.2,.9,.25,1)" style-hover="transform:translateY(-2px)" style-active="transform:scale(.985)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <span style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#C7727A">Puedo gastar hoy</span>
+            <svg width="16" height="16" sc-camel-view-box="0 0 16 16" fill="none"><path d="M6 3.5L10.5 8L6 12.5" stroke="#C7727A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:10px">
+            <span style="font:700 40px/1 'Space Grotesk',sans-serif;color:#F7F7F8;letter-spacing:-.03em">{{ gastarHoy }}</span>
+            <span style="font:500 13px 'IBM Plex Sans',sans-serif;color:#8B8B95;padding-bottom:7px">/ día</span>
+          </div>
+          <div style="height:6px;border-radius:3px;background:#2A1418;margin:16px 0 10px;overflow:hidden">
+            <div style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--acc,#FF3A46),#FF7A62);width:{{ libreUsadoPct }};transition:width 1.2s cubic-bezier(.2,.9,.25,1)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font:400 12px 'IBM Plex Sans',sans-serif;color:#8B8B95">
+            <span>Libre: <span style="color:#D8D8DE;font-family:'Space Grotesk',sans-serif;font-weight:600">{{ libreRestante }}</span></span>
+            <span>{{ diasRestantes }} días restantes</span>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <span style="font:600 15px 'IBM Plex Sans',sans-serif;color:#F7F7F8">Hábitos de hoy</span>
+          <span style="font:400 12px 'IBM Plex Sans',sans-serif;color:#75757F">Desliza para completar →</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+          <sc-for list="{{ habitRows }}" as="h" hint-placeholder-count="4">
+            <div style="position:relative;border-radius:18px;overflow:hidden;animation:rowIn .3s cubic-bezier(.2,.9,.25,1)">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;padding-left:22px;background:linear-gradient(90deg,rgba(58,196,110,.18),rgba(58,196,110,0))">
+                <svg width="20" height="20" sc-camel-view-box="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="#4FD07E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </div>
+              <div sc-camel-on-pointer-down="{{ h.onDown }}" sc-camel-on-pointer-move="{{ h.onMove }}" sc-camel-on-pointer-up="{{ h.onUp }}" sc-camel-on-pointer-cancel="{{ h.onUp }}" sc-camel-on-click="{{ h.onTap }}" style="{{ h.dragStyle }}">
+                <div style="display:flex;align-items:center;gap:14px;padding:15px 16px;border-radius:18px;background:#141417;border:1px solid #26262C;touch-action:pan-y;user-select:none;cursor:pointer">
+                  <div style="{{ h.iconStyle }}">
+                    <span style="font:600 15px 'Space Grotesk',sans-serif">{{ h.glyph }}</span>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="{{ h.nameStyle }}">{{ h.nombre }}</div>
+                    <div style="font:400 12px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:3px">{{ h.meta }}</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:8px;background:#1C1C21">
+                      <svg width="10" height="12" sc-camel-view-box="0 0 10 12" fill="none"><path d="M5 0.5C5 3 7.5 3.5 7.5 6.5C7.5 8.7 6 11.5 5 11.5C4 11.5 2.5 8.7 2.5 6.5C2.5 5 3.5 4.5 3.5 3C4.5 3.5 5 2.5 5 0.5Z" fill="#FF6B4A"></path></svg>
+                      <span style="font:600 12px 'Space Grotesk',sans-serif;color:#B9B9C2">{{ h.streak }}</span>
+                    </div>
+                    <div style="{{ h.checkStyle }}">
+                      <svg width="14" height="14" sc-camel-view-box="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="#0B0B0D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="font:600 15px 'IBM Plex Sans',sans-serif;color:#F7F7F8;margin-bottom:12px">Atención</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ alertas }}" as="a" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:13px;padding:14px 15px;border-radius:16px;background:#141417;border:1px solid #26262C">
+              <div style="{{ a.dotStyle }}"></div>
+              <div style="flex:1">
+                <div style="font:500 13.5px 'IBM Plex Sans',sans-serif;color:#E7E7EB">{{ a.titulo }}</div>
+                <div style="font:400 12px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:2px">{{ a.sub }}</div>
+              </div>
+              <span style="{{ a.tagStyle }}">{{ a.tag }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isHabitos }}" hint-placeholder-val="{{ false }}">
+      <div style="animation:scrIn .34s cubic-bezier(.2,.9,.25,1);padding:0 20px">
+        <sc-if value="{{ noDetalle }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px">
+            <div>
+              <div style="font:700 30px/1.05 'Space Grotesk',sans-serif;color:#F7F7F8;letter-spacing:-.02em;margin-bottom:4px">Hábitos</div>
+              <div style="font:400 13px 'IBM Plex Sans',sans-serif;color:#75757F">{{ resumenSemana }}</div>
+            </div>
+            <div sc-camel-on-click="{{ abrirNuevoHabito }}" style="display:flex;align-items:center;gap:6px;padding:9px 13px;border-radius:12px;background:rgba(255,58,70,.12);border:1px solid rgba(255,58,70,.28);cursor:pointer;font:600 12.5px 'IBM Plex Sans',sans-serif;color:#FF6B74;white-space:nowrap;transition:transform .18s" style-hover="transform:translateY(-2px)" style-active="transform:scale(.94)">
+              <svg width="13" height="13" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#FF6B74" stroke-width="2.6" stroke-linecap="round"></path></svg>Nuevo
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ habitCards }}" as="h" hint-placeholder-count="4">
+              <div style="position:relative;animation:rowIn .32s cubic-bezier(.2,.9,.25,1)">
+                <div sc-camel-on-click="{{ h.onOpen }}" style="padding:18px;border-radius:20px;background:#141417;border:1px solid #26262C;cursor:pointer;transition:transform .18s cubic-bezier(.2,.9,.25,1),border-color .18s" style-hover="transform:translateY(-2px);border-color:#3A3A44">
+                  <div style="display:flex;align-items:center;gap:13px;margin-bottom:15px">
+                    <div style="{{ h.iconStyle }}"><span style="font:600 15px 'Space Grotesk',sans-serif">{{ h.glyph }}</span></div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font:600 15px 'IBM Plex Sans',sans-serif;color:#F0F0F3">{{ h.nombre }}</div>
+                      <div style="font:400 12px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:2px">{{ h.meta }}</div>
+                    </div>
+                    <div style="text-align:right;margin-right:26px">
+                      <div style="font:700 20px 'Space Grotesk',sans-serif;color:#F0F0F3;line-height:1">{{ h.streak }}</div>
+                      <div style="font:400 10px 'IBM Plex Sans',sans-serif;color:#75757F;letter-spacing:.08em;text-transform:uppercase">racha</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;gap:5px">
+                    <sc-for list="{{ h.dias }}" as="d" hint-placeholder-count="7">
+                      <div style="{{ d.style }}"></div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div sc-camel-on-click="{{ h.onDelete }}" style="position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:8px;background:#1C1C22;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s,transform .18s" style-hover="background:rgba(255,58,70,.18);transform:scale(1.08)">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 14 14" fill="none"><path d="M2 4h10M5.5 4V2.6h3V4M3.4 4l.6 7.4h6l.6-7.4" stroke="#8B8B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ sinHabitos }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:36px 20px;border-radius:20px;border:1px dashed #2E2E36;text-align:center;font:400 13.5px 'IBM Plex Sans',sans-serif;color:#75757F">No tienes hábitos activos. Toca <span style="color:#FF6B74;font-weight:600">Nuevo</span> para crear el primero.</div>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ hayDetalle }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:scrIn .3s cubic-bezier(.2,.9,.25,1)">
+          <div sc-camel-on-click="{{ cerrarDetalle }}" style="display:inline-flex;align-items:center;gap:7px;padding:8px 13px 8px 9px;border-radius:11px;background:#17171B;border:1px solid #26262C;cursor:pointer;margin-bottom:20px;font:500 12.5px 'IBM Plex Sans',sans-serif;color:#B9B9C2">
+            <svg width="14" height="14" sc-camel-view-box="0 0 16 16" fill="none"><path d="M10 3.5L5.5 8L10 12.5" stroke="#B9B9C2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>Hábitos
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+            <div style="{{ det.iconStyle }}"><span style="font:600 20px 'Space Grotesk',sans-serif">{{ det.glyph }}</span></div>
+            <div>
+              <div style="font:700 24px/1.1 'Space Grotesk',sans-serif;color:#F7F7F8;letter-spacing:-.02em">{{ det.nombre }}</div>
+              <div style="font:400 13px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:3px">{{ det.meta }}</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px">
+            <sc-for list="{{ det.stats }}" as="s" hint-placeholder-count="3">
+              <div style="padding:15px 12px;border-radius:16px;background:#141417;border:1px solid #26262C;text-align:center">
+                <div style="{{ s.valStyle }}">{{ s.valor }}</div>
+                <div style="font:400 10.5px 'IBM Plex Sans',sans-serif;color:#75757F;letter-spacing:.07em;text-transform:uppercase;margin-top:5px">{{ s.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:18px;border-radius:20px;background:#141417;border:1px solid #26262C;margin-bottom:16px">
+            <div style="font:600 13px 'IBM Plex Sans',sans-serif;color:#E7E7EB;margin-bottom:16px">Últimas 8 semanas</div>
+            <div style="display:flex;gap:6px">
+              <sc-for list="{{ det.heat }}" as="col" hint-placeholder-count="8">
+                <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+                  <sc-for list="{{ col.dias }}" as="c" hint-placeholder-count="7">
+                    <div style="{{ c.style }}"></div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:12px;font:400 10.5px 'IBM Plex Sans',sans-serif;color:#65656E">
+              <span>Hace 8 semanas</span><span>Esta semana</span>
+            </div>
+          </div>
+          <div style="padding:18px;border-radius:20px;background:linear-gradient(150deg,#1D0F11,#141417);border:1px solid #3A1D21;margin-bottom:14px">
+            <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#C7727A;margin-bottom:9px">Patrón detectado</div>
+            <div style="font:400 14px/1.5 'IBM Plex Sans',sans-serif;color:#DEDEE4;text-wrap:pretty">{{ det.insight }}</div>
+          </div>
+          <div sc-camel-on-click="{{ det.onDelete }}" style="height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;gap:8px;background:#17171B;border:1px solid #332326;color:#FF6B74;font:600 14px 'IBM Plex Sans',sans-serif;cursor:pointer;transition:background .18s" style-hover="background:rgba(255,58,70,.1)">
+            <svg width="14" height="14" sc-camel-view-box="0 0 14 14" fill="none"><path d="M2 4h10M5.5 4V2.6h3V4M3.4 4l.6 7.4h6l.6-7.4" stroke="#FF6B74" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>Eliminar hábito
+          </div>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isDinero }}" hint-placeholder-val="{{ false }}">
+      <div style="animation:scrIn .34s cubic-bezier(.2,.9,.25,1);padding:0 20px">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">
+          <div>
+            <div style="font:700 30px/1.05 'Space Grotesk',sans-serif;color:#F7F7F8;letter-spacing:-.02em">Dinero</div>
+            <div style="font:400 13px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:4px">Agosto · ciclo hasta el 15 de sept</div>
+          </div>
+          <div sc-camel-on-click="{{ togglePrivacidad }}" style="width:36px;height:36px;border-radius:11px;background:#17171B;border:1px solid #26262C;display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="17" height="17" sc-camel-view-box="0 0 20 20" fill="none"><path d="M1.5 10S4.5 4.5 10 4.5 18.5 10 18.5 10 15.5 15.5 10 15.5 1.5 10 1.5 10Z" stroke="#B9B9C2" stroke-width="1.5"></path><circle cx="10" cy="10" r="2.6" stroke="#B9B9C2" stroke-width="1.5"></circle></svg>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+          <div style="padding:17px;border-radius:18px;background:#141417;border:1px solid #26262C">
+            <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Disponible</div>
+            <div style="{{ montoStyle }}">{{ disponible }}</div>
+            <div style="font:400 11.5px 'IBM Plex Sans',sans-serif;color:#4FD07E;margin-top:5px">Débito + efectivo</div>
+          </div>
+          <div style="padding:17px;border-radius:18px;background:#141417;border:1px solid #26262C">
+            <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Debo</div>
+            <div style="{{ montoStyle }}">{{ deudaTarjeta }}</div>
+            <div style="font:400 11.5px 'IBM Plex Sans',sans-serif;color:#FF6B74;margin-top:5px">{{ proximoPago }}</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
+          <div>
+            <div style="font:600 15px 'IBM Plex Sans',sans-serif;color:#F7F7F8">Tarjetas de crédito</div>
+            <div style="font:400 12px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:2px">{{ resumenTarjetas }}</div>
+          </div>
+          <div sc-camel-on-click="{{ abrirNuevaTarjeta }}" style="display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:11px;background:#1B1B20;border:1px solid #2A2A32;cursor:pointer;font:600 12px 'IBM Plex Sans',sans-serif;color:#B9B9C2;transition:transform .18s" style-active="transform:scale(.94)">
+            <svg width="12" height="12" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#B9B9C2" stroke-width="2.6" stroke-linecap="round"></path></svg>Tarjeta
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:13px;margin-bottom:22px">
+        <sc-for list="{{ tarjetas }}" as="t" hint-placeholder-count="2">
+          <div style="position:relative;border-radius:22px;padding:20px;background:linear-gradient(140deg,#232329 0%,#141417 60%,#1D1013 100%);border:1px solid #32323A;overflow:hidden;animation:rowIn .3s cubic-bezier(.2,.9,.25,1)">
+            <div style="position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.045) 48%,transparent 62%);background-size:200% 100%;animation:shimmer 6s linear infinite"></div>
+            <div style="position:relative">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px">
+                <div>
+                  <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8B8B95">{{ t.nombre }}</div>
+                  <div style="font:600 15px 'Space Grotesk',sans-serif;color:#F0F0F3;margin-top:6px">•••• {{ t.ultimos }}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="{{ t.badgeStyle }}">{{ t.pctTxt }} USADO</div>
+                  <div sc-camel-on-click="{{ t.onDelete }}" style="width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;transition:background .18s" style-hover="background:rgba(255,58,70,.2)">
+                    <svg width="11" height="11" sc-camel-view-box="0 0 14 14" fill="none"><path d="M2 4h10M5.5 4V2.6h3V4M3.4 4l.6 7.4h6l.6-7.4" stroke="#8B8B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px">
+                <div>
+                  <div style="font:400 11.5px 'IBM Plex Sans',sans-serif;color:#8B8B95;margin-bottom:4px">Saldo del ciclo</div>
+                  <div style="{{ montoGrandeStyle }}">{{ t.saldoTxt }}</div>
+                </div>
+                <div style="text-align:right">
+                  <div style="font:400 11.5px 'IBM Plex Sans',sans-serif;color:#8B8B95;margin-bottom:4px">Cupo</div>
+                  <div style="font:600 15px 'Space Grotesk',sans-serif;color:#B9B9C2">{{ t.cupoTxt }}</div>
+                </div>
+              </div>
+              <div style="height:7px;border-radius:4px;background:#2A2A31;overflow:hidden;margin-bottom:16px">
+                <div style="{{ t.barStyle }}"></div>
+              </div>
+              <div style="position:relative;height:34px;margin-bottom:14px">
+                <div style="position:absolute;top:9px;left:0;right:0;height:2px;background:#2A2A31;border-radius:1px"></div>
+                <div style="{{ t.progresoStyle }}"></div>
+                <div style="position:absolute;top:4px;left:0;display:flex;flex-direction:column;align-items:flex-start">
+                  <div style="width:12px;height:12px;border-radius:50%;background:#141417;border:2.5px solid #4B4B55"></div>
+                  <span style="font:500 10px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:6px">Corte {{ t.corte }}</span>
+                </div>
+                <div style="{{ t.hoyStyle }}">
+                  <div style="width:12px;height:12px;border-radius:50%;background:var(--acc,#FF3A46);animation:pulseRing 2.4s infinite"></div>
+                  <span style="font:600 10px 'IBM Plex Sans',sans-serif;color:#FF6B74;margin-top:6px">Hoy 18</span>
+                </div>
+                <div style="position:absolute;top:4px;right:0;display:flex;flex-direction:column;align-items:flex-end">
+                  <div style="width:12px;height:12px;border-radius:50%;background:#141417;border:2.5px solid #4B4B55"></div>
+                  <span style="font:500 10px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:6px">Pago {{ t.pago }}</span>
+                </div>
+              </div>
+              <sc-if value="{{ t.preCorte }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:11px;background:rgba(255,255,255,.04);margin-bottom:12px">
+                  <div style="width:6px;height:6px;border-radius:50%;background:#8B8B95;flex:none"></div>
+                  <span style="font:400 11.5px 'IBM Plex Sans',sans-serif;color:#9A9AA4">{{ t.notaCiclo }}</span>
+                </div>
+              </sc-if>
+              <div style="display:flex;gap:8px">
+                <div sc-camel-on-click="{{ t.onAbonar }}" style="flex:1;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;background:linear-gradient(150deg,#FF3A46,#D81E2B);color:#fff;font:600 13px 'IBM Plex Sans',sans-serif;cursor:pointer;box-shadow:0 8px 18px rgba(255,58,70,.24);transition:transform .18s" style-active="transform:scale(.96)">
+                  <svg width="13" height="13" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"></path></svg>Registrar abono
+                </div>
+                <div sc-camel-on-click="{{ t.onToggle }}" style="height:40px;padding:0 14px;border-radius:12px;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid #33333B;color:#B9B9C2;font:600 12.5px 'IBM Plex Sans',sans-serif;cursor:pointer">
+                  {{ t.abonosLabel }}
+                  <svg width="12" height="12" sc-camel-view-box="0 0 16 16" fill="none" style="{{ t.chevronStyle }}"><path d="M6 3.5L10.5 8L6 12.5" stroke="#8B8B95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+              </div>
+              <sc-if value="{{ t.abierto }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:14px;padding-top:13px;border-top:1px solid #2A2A31;animation:rowIn .26s cubic-bezier(.2,.9,.25,1)">
+                <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Historial de abonos</div>
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <sc-for list="{{ t.abonos }}" as="ab" hint-placeholder-count="2">
+                    <div sc-camel-on-click="{{ ab.onEdit }}" style="display:flex;align-items:center;gap:10px;padding:9px 8px;margin:0 -8px;border-radius:11px;cursor:pointer;transition:background .16s" style-hover="background:rgba(255,255,255,.04)">
+                      <div style="width:26px;height:26px;border-radius:8px;background:rgba(79,208,126,.13);display:flex;align-items:center;justify-content:center;flex:none">
+                        <svg width="12" height="12" sc-camel-view-box="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="#4FD07E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      </div>
+                      <div style="flex:1;min-width:0">
+                        <div style="font:500 13px 'IBM Plex Sans',sans-serif;color:#DEDEE4">{{ ab.concepto }}</div>
+                        <div style="font:400 11px 'IBM Plex Sans',sans-serif;color:#65656E;margin-top:2px">{{ ab.fecha }}</div>
+                      </div>
+                      <span style="font:600 13px 'Space Grotesk',sans-serif;color:#4FD07E">−{{ ab.montoTxt }}</span>
+                      <svg width="12" height="12" sc-camel-view-box="0 0 16 16" fill="none" style="flex:none"><path d="M6 3.5L10.5 8L6 12.5" stroke="#55555E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ t.sinAbonos }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:8px 0 4px;font:400 12.5px 'IBM Plex Sans',sans-serif;color:#65656E">Todavía no has abonado a esta tarjeta.</div>
+                </sc-if>
+                <div style="display:flex;justify-content:space-between;margin-top:12px;padding-top:11px;border-top:1px solid #2A2A31;font:400 12px 'IBM Plex Sans',sans-serif;color:#8B8B95">
+                  <span>Abonado este ciclo</span>
+                  <span style="font:600 13px 'Space Grotesk',sans-serif;color:#4FD07E">{{ t.abonadoTxt }}</span>
+                </div>
+              </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+        </div>
+
+        <div style="padding:18px;border-radius:20px;background:#141417;border:1px solid #26262C;margin-bottom:22px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div>
+              <div style="font:600 14px 'IBM Plex Sans',sans-serif;color:#F0F0F3">Cuenta de ahorros</div>
+              <div style="font:400 11.5px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:3px">Meta: fondo de emergencia {{ metaAhorro }}</div>
+            </div>
+            <div style="{{ montoStyle }}">{{ ahorro }}</div>
+          </div>
+          <div style="height:7px;border-radius:4px;background:#22222A;overflow:hidden">
+            <div style="height:100%;border-radius:4px;background:linear-gradient(90deg,#4FD07E,#8FE3A8);width:{{ ahorroPct }};transition:width 1.2s cubic-bezier(.2,.9,.25,1)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:9px;font:400 11.5px 'IBM Plex Sans',sans-serif;color:#75757F">
+            <span>70% de la meta</span><span>+{{ aporteMes }} este mes</span>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
+          <div>
+            <div style="font:600 15px 'IBM Plex Sans',sans-serif;color:#F7F7F8">Me deben</div>
+            <div style="font:400 12px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:2px">{{ resumenPrestamos }}</div>
+          </div>
+          <div sc-camel-on-click="{{ abrirNuevoPrestamo }}" style="display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:11px;background:#1B1B20;border:1px solid #2A2A32;cursor:pointer;font:600 12px 'IBM Plex Sans',sans-serif;color:#B9B9C2;transition:transform .18s" style-active="transform:scale(.94)">
+            <svg width="12" height="12" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#B9B9C2" stroke-width="2.6" stroke-linecap="round"></path></svg>Añadir
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:22px">
+          <sc-for list="{{ prestamos }}" as="p" hint-placeholder-count="3">
+            <div style="{{ p.cardStyle }}">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+                <div style="flex:1;min-width:0">
+                  <div style="font:600 14.5px 'IBM Plex Sans',sans-serif;color:#F0F0F3">{{ p.nombre }}</div>
+                  <div style="font:400 11.5px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:3px">{{ p.entidad }} · abono {{ p.cuotaTxt }}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="text-align:right">
+                    <div style="font:700 16px 'Space Grotesk',sans-serif;color:#F0F0F3;line-height:1">{{ p.restanteTxt }}</div>
+                    <div style="font:400 10px 'IBM Plex Sans',sans-serif;color:#75757F;letter-spacing:.06em;text-transform:uppercase;margin-top:4px">por cobrar</div>
+                  </div>
+                  <div sc-camel-on-click="{{ p.onDelete }}" style="width:24px;height:24px;border-radius:7px;background:#1C1C22;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;transition:background .18s" style-hover="background:rgba(255,58,70,.18)">
+                    <svg width="11" height="11" sc-camel-view-box="0 0 14 14" fill="none"><path d="M2 4h10M5.5 4V2.6h3V4M3.4 4l.6 7.4h6l.6-7.4" stroke="#8B8B95" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;gap:3px;margin-bottom:12px">
+                <sc-for list="{{ p.cuotas }}" as="c" hint-placeholder-count="12">
+                  <div style="{{ c.style }}"></div>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #232329">
+                <div>
+                  <div style="font:500 12.5px 'IBM Plex Sans',sans-serif;color:#B9B9C2">Abono {{ p.numeroCuota }} de {{ p.total }}</div>
+                  <div style="{{ p.venceStyle }}">{{ p.venceTxt }}</div>
+                </div>
+                <div sc-camel-on-click="{{ p.onToggle }}" style="{{ p.btnStyle }}">
+                  <sc-if value="{{ p.pagado }}" hint-placeholder-val="{{ false }}">
+                    <svg width="13" height="13" sc-camel-view-box="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="#4FD07E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </sc-if>
+                  {{ p.btnTexto }}
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
+          <span style="font:600 15px 'IBM Plex Sans',sans-serif;color:#F7F7F8">Presupuestos</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font:400 12px 'IBM Plex Sans',sans-serif;color:#75757F">{{ gastadoTotal }}</span>
+            <div sc-camel-on-click="{{ abrirNuevoPresupuesto }}" style="width:28px;height:28px;border-radius:9px;background:#1B1B20;border:1px solid #2A2A32;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .18s" style-active="transform:scale(.9)">
+              <svg width="12" height="12" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#B9B9C2" stroke-width="2.6" stroke-linecap="round"></path></svg>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:22px">
+          <sc-for list="{{ presupuestos }}" as="p" hint-placeholder-count="6">
+            <div style="border-radius:16px;background:#141417;border:1px solid #26262C;overflow:hidden;animation:rowIn .3s cubic-bezier(.2,.9,.25,1)">
+              <div sc-camel-on-click="{{ p.onToggle }}" style="padding:14px 15px;cursor:pointer">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                  <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                    <div style="{{ p.dotStyle }}"></div>
+                    <span style="font:500 13.5px 'IBM Plex Sans',sans-serif;color:#E7E7EB">{{ p.nombre }}</span>
+                    <span style="font:400 11px 'IBM Plex Sans',sans-serif;color:#65656E">{{ p.conteo }}</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:9px">
+                    <span style="{{ p.montoStyle }}">{{ p.texto }}</span>
+                    <svg width="13" height="13" sc-camel-view-box="0 0 16 16" fill="none" style="{{ p.chevronStyle }}"><path d="M6 3.5L10.5 8L6 12.5" stroke="#55555E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </div>
+                <div style="height:5px;border-radius:3px;background:#22222A;overflow:hidden">
+                  <div style="{{ p.barStyle }}"></div>
+                </div>
+              </div>
+              <sc-if value="{{ p.abierto }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:2px 15px 14px;animation:rowIn .26s cubic-bezier(.2,.9,.25,1)">
+                <div style="height:1px;background:#22222A;margin-bottom:10px"></div>
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <sc-for list="{{ p.movs }}" as="mv" hint-placeholder-count="3">
+                    <div sc-camel-on-click="{{ mv.onEdit }}" style="display:flex;align-items:center;gap:10px;padding:9px 8px;margin:0 -8px;border-radius:11px;cursor:pointer;transition:background .16s" style-hover="background:#1A1A1F">
+                      <div style="flex:1;min-width:0">
+                        <div style="font:500 13px 'IBM Plex Sans',sans-serif;color:#DEDEE4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ mv.nombre }}</div>
+                        <div style="{{ mv.metaStyle }}">{{ mv.fecha }} · {{ mv.medio }}</div>
+                      </div>
+                      <span style="font:600 13px 'Space Grotesk',sans-serif;color:#F0F0F3">{{ mv.montoTxt }}</span>
+                      <svg width="12" height="12" sc-camel-view-box="0 0 16 16" fill="none" style="flex:none"><path d="M6 3.5L10.5 8L6 12.5" stroke="#55555E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ p.vacio }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:10px 0 12px;font:400 12.5px 'IBM Plex Sans',sans-serif;color:#65656E">Sin movimientos registrados este ciclo.</div>
+                </sc-if>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <div sc-camel-on-click="{{ p.onAddMov }}" style="flex:1;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,58,70,.11);border:1px solid rgba(255,58,70,.26);color:#FF6B74;font:600 12.5px 'IBM Plex Sans',sans-serif;cursor:pointer">
+                    <svg width="12" height="12" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#FF6B74" stroke-width="2.6" stroke-linecap="round"></path></svg>Registrar aquí
+                  </div>
+                  <div sc-camel-on-click="{{ p.onEdit }}" style="height:38px;padding:0 14px;border-radius:11px;display:flex;align-items:center;gap:6px;background:#1B1B20;border:1px solid #2A2A32;color:#B9B9C2;font:600 12.5px 'IBM Plex Sans',sans-serif;cursor:pointer">Editar</div>
+                </div>
+              </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+
+
+        <div style="padding:18px;border-radius:20px;background:linear-gradient(150deg,#111A14,#141417);border:1px solid #1F3A28">
+          <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6FBF8C;margin-bottom:10px">Plan sugerido · 50 / 20 / 10 / 20</div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ plan }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <span style="font:400 13px 'IBM Plex Sans',sans-serif;color:#B9B9C2">{{ r.nombre }}</span>
+                <span style="font:600 13px 'Space Grotesk',sans-serif;color:#E7E7EB">{{ r.monto }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isStats }}" hint-placeholder-val="{{ false }}">
+      <div style="animation:scrIn .34s cubic-bezier(.2,.9,.25,1);padding:0 20px">
+        <div style="font:700 30px/1.05 'Space Grotesk',sans-serif;color:#F7F7F8;letter-spacing:-.02em;margin-bottom:4px">Progreso</div>
+        <div style="font:400 13px 'IBM Plex Sans',sans-serif;color:#75757F;margin-bottom:22px">Últimas 6 semanas</div>
+
+        <div style="padding:20px 18px;border-radius:20px;background:#141417;border:1px solid #26262C;margin-bottom:14px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px">
+            <span style="font:600 14px 'IBM Plex Sans',sans-serif;color:#F0F0F3">Constancia semanal</span>
+            <span style="font:600 13px 'Space Grotesk',sans-serif;color:#4FD07E">+18%</span>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:10px;height:120px">
+            <sc-for list="{{ barras }}" as="b" hint-placeholder-count="6">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end">
+                <div style="{{ b.barStyle }}"></div>
+                <span style="font:400 10.5px 'IBM Plex Sans',sans-serif;color:#65656E">{{ b.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="padding:20px 18px;border-radius:20px;background:#141417;border:1px solid #26262C;margin-bottom:14px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px">
+            <span style="font:600 14px 'IBM Plex Sans',sans-serif;color:#F0F0F3">Gasto variable por semana</span>
+            <span style="font:600 13px 'Space Grotesk',sans-serif;color:#FF6B74">-$62.000</span>
+          </div>
+          <svg width="100%" height="110" sc-camel-view-box="0 0 300 110" sc-camel-preserve-aspect-ratio="none">
+            <defs>
+              <linearGradient id="gfill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FF3A46" stop-opacity="0.28"></stop>
+                <stop offset="100%" stop-color="#FF3A46" stop-opacity="0"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M0 96 H300" stroke="#22222A" stroke-width="1"></path>
+            <path d="M0 62 H300" stroke="#1C1C23" stroke-width="1"></path>
+            <path d="M0 28 H300" stroke="#1C1C23" stroke-width="1"></path>
+            <path d="M0 34 L60 52 L120 40 L180 70 L240 58 L300 82 L300 110 L0 110 Z" fill="url(#gfill)" opacity="{{ mountedOpacity }}" style="transition:opacity 1.4s ease .3s"></path>
+            <path d="M0 34 L60 52 L120 40 L180 70 L240 58 L300 82" fill="none" stroke="var(--acc,#FF3A46)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="420" stroke-dashoffset="{{ lineOffset }}" style="transition:stroke-dashoffset 1.6s cubic-bezier(.3,.8,.3,1)"></path>
+            <circle cx="300" cy="82" r="4.5" fill="#FF3A46" opacity="{{ mountedOpacity }}" style="transition:opacity .5s ease 1.4s"></circle>
+          </svg>
+          <div style="display:flex;justify-content:space-between;margin-top:10px;font:400 10.5px 'IBM Plex Sans',sans-serif;color:#65656E">
+            <span>Jul 7</span><span>Jul 21</span><span>Ago 4</span><span>Ago 18</span>
+          </div>
+        </div>
+
+        <div style="padding:20px 18px;border-radius:20px;background:linear-gradient(150deg,#1D0F11,#141417);border:1px solid #3A1D21;margin-bottom:14px">
+          <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#C7727A;margin-bottom:11px">Hábitos × dinero</div>
+          <div style="font:400 14.5px/1.55 'IBM Plex Sans',sans-serif;color:#DEDEE4;text-wrap:pretty">Las semanas que fuiste al gimnasio 5 veces gastaste <span style="color:#FF6B74;font-weight:600">$190.000 menos</span> en restaurantes. El patrón se repite en 5 de las últimas 6 semanas.</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+            <div style="padding:17px;border-radius:18px;background:#141417;border:1px solid #26262C">
+              <div style="{{ k.valStyle }}">{{ k.valor }}</div>
+              <div style="font:400 11.5px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:6px">{{ k.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+    </div>
+
+    <sc-if value="{{ sheetAbierto }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div sc-camel-on-click="{{ cerrarSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(3px);z-index:50;animation:fadeIn .22s ease"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;z-index:51;border-radius:28px 28px 0 0;background:#131316;border-top:1px solid #2C2C34;padding:12px 20px 28px;animation:sheetUp .34s cubic-bezier(.2,.9,.25,1);max-height:88%;overflow-y:auto">
+        <div style="width:38px;height:4px;border-radius:2px;background:#33333C;margin:0 auto 18px"></div>
+        <div style="font:600 16px 'IBM Plex Sans',sans-serif;color:#F0F0F3;margin-bottom:18px">{{ sheetTitulo }}</div>
+
+        <sc-if value="{{ sheetEsMonto }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="text-align:center;margin-bottom:18px">
+            <span style="font:700 40px 'Space Grotesk',sans-serif;color:#F7F7F8;letter-spacing:-.03em">{{ montoInput }}</span>
+          </div>
+          <sc-if value="{{ sheetEsGasto }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px">
+            <sc-for list="{{ chips }}" as="c" hint-placeholder-count="6">
+              <div sc-camel-on-click="{{ c.onPick }}" style="{{ c.style }}">{{ c.nombre }}</div>
+            </sc-for>
+          </div>
+          <input value="{{ nombreInput }}" sc-camel-on-change="{{ setNombre }}" placeholder="¿En qué fue? Ej. Almuerzo con Ana" style="width:100%;height:46px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:14.5px;padding:0 15px;margin-bottom:12px">
+          <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Pagado con</div>
+          <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px">
+            <sc-for list="{{ medios }}" as="md" hint-placeholder-count="3">
+              <div sc-camel-on-click="{{ md.onPick }}" style="{{ md.style }}">{{ md.label }}</div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
+            <sc-for list="{{ teclas }}" as="t" hint-placeholder-count="12">
+              <div sc-camel-on-click="{{ t.onTap }}" style="height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;display:flex;align-items:center;justify-content:center;font:600 19px 'Space Grotesk',sans-serif;color:#E7E7EB;cursor:pointer;user-select:none;transition:background .12s,transform .12s" style-active="transform:scale(.94);background:#26262E">{{ t.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ sheetEsHabito }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Nombre</div>
+          <input value="{{ nombreInput }}" sc-camel-on-change="{{ setNombre }}" placeholder="Ej. Meditar 10 minutos" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px;margin-bottom:16px">
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Frecuencia</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+            <sc-for list="{{ frecuencias }}" as="f" hint-placeholder-count="4">
+              <div sc-camel-on-click="{{ f.onPick }}" style="{{ f.style }}">{{ f.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ sheetEsPresupuesto }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Categoría</div>
+          <input value="{{ nombreInput }}" sc-camel-on-change="{{ setNombre }}" placeholder="Ej. Mercado" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px;margin-bottom:16px">
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Tope mensual</div>
+          <input value="{{ limiteInput }}" sc-camel-on-change="{{ setLimite }}" sc-camel-input-mode="numeric" placeholder="200000" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;padding:0 15px;margin-bottom:16px">
+          <sc-if value="{{ editandoPresupuesto }}" hint-placeholder-val="{{ false }}">
+          <div sc-camel-on-click="{{ eliminarPresupuesto }}" style="height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;background:#17171B;border:1px solid #332326;color:#FF6B74;font:600 13.5px 'IBM Plex Sans',sans-serif;cursor:pointer;margin-bottom:14px">
+            <svg width="13" height="13" sc-camel-view-box="0 0 14 14" fill="none"><path d="M2 4h10M5.5 4V2.6h3V4M3.4 4l.6 7.4h6l.6-7.4" stroke="#FF6B74" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>Eliminar categoría
+          </div>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ sheetEsAbono }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="{{ abonoInfoStyle }}">
+            <span style="font:400 12.5px 'IBM Plex Sans',sans-serif;color:#8B8B95">Saldo actual · {{ abonoTarjeta }}</span>
+            <span style="font:600 14px 'Space Grotesk',sans-serif;color:#F0F0F3">{{ abonoSaldo }}</span>
+          </div>
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Valor abonado</div>
+          <input value="{{ limiteInput }}" sc-camel-on-change="{{ setLimite }}" sc-camel-input-mode="numeric" placeholder="300000" style="width:100%;height:52px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;padding:0 15px;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Fecha</div>
+              <input value="{{ entidadInput }}" sc-camel-on-change="{{ setEntidad }}" placeholder="18 ago" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px">
+            </div>
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Cómo</div>
+              <input value="{{ nombreInput }}" sc-camel-on-change="{{ setNombre }}" placeholder="PSE" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px">
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:16px">
+            <sc-for list="{{ atajosAbono }}" as="a" hint-placeholder-count="3">
+              <div sc-camel-on-click="{{ a.onPick }}" style="{{ a.style }}">{{ a.label }}</div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ editandoAbono }}" hint-placeholder-val="{{ false }}">
+          <div sc-camel-on-click="{{ eliminarAbono }}" style="height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;background:#17171B;border:1px solid #332326;color:#FF6B74;font:600 13.5px 'IBM Plex Sans',sans-serif;cursor:pointer;margin-bottom:14px">
+            <svg width="13" height="13" sc-camel-view-box="0 0 14 14" fill="none"><path d="M2 4h10M5.5 4V2.6h3V4M3.4 4l.6 7.4h6l.6-7.4" stroke="#FF6B74" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>Eliminar abono
+          </div>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ sheetEsTarjeta }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Nombre de la tarjeta</div>
+          <input value="{{ nombreInput }}" sc-camel-on-change="{{ setNombre }}" placeholder="Ej. Visa Bancolombia" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px;margin-bottom:14px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Últimos 4</div>
+              <input value="{{ entidadInput }}" sc-camel-on-change="{{ setEntidad }}" sc-camel-input-mode="numeric" placeholder="4417" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;padding:0 14px">
+            </div>
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Cupo total</div>
+              <input value="{{ limiteInput }}" sc-camel-on-change="{{ setLimite }}" sc-camel-input-mode="numeric" placeholder="2000000" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;padding:0 14px">
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px;margin-bottom:18px">
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Saldo</div>
+              <input value="{{ cuotasInput }}" sc-camel-on-change="{{ setCuotas }}" sc-camel-input-mode="numeric" placeholder="612000" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;padding:0 13px">
+            </div>
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Corte</div>
+              <input value="{{ corteInput }}" sc-camel-on-change="{{ setCorte }}" sc-camel-input-mode="numeric" placeholder="15" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;padding:0 13px">
+            </div>
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Pago</div>
+              <input value="{{ pagoInput }}" sc-camel-on-change="{{ setPago }}" sc-camel-input-mode="numeric" placeholder="30" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;padding:0 13px">
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ sheetEsMov }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Concepto</div>
+          <input value="{{ nombreInput }}" sc-camel-on-change="{{ setNombre }}" placeholder="Ej. Almuerzo con Ana" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px;margin-bottom:16px">
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Valor</div>
+          <input value="{{ limiteInput }}" sc-camel-on-change="{{ setLimite }}" sc-camel-input-mode="numeric" placeholder="38000" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;padding:0 15px;margin-bottom:16px">
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Categoría</div>
+          <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px">
+            <sc-for list="{{ chips }}" as="c" hint-placeholder-count="6">
+              <div sc-camel-on-click="{{ c.onPick }}" style="{{ c.style }}">{{ c.nombre }}</div>
+            </sc-for>
+          </div>
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Pagado con</div>
+          <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px">
+            <sc-for list="{{ medios }}" as="md" hint-placeholder-count="3">
+              <div sc-camel-on-click="{{ md.onPick }}" style="{{ md.style }}">{{ md.label }}</div>
+            </sc-for>
+          </div>
+          <div sc-camel-on-click="{{ eliminarMov }}" style="height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;background:#17171B;border:1px solid #332326;color:#FF6B74;font:600 13.5px 'IBM Plex Sans',sans-serif;cursor:pointer;margin-bottom:14px">
+            <svg width="13" height="13" sc-camel-view-box="0 0 14 14" fill="none"><path d="M2 4h10M5.5 4V2.6h3V4M3.4 4l.6 7.4h6l.6-7.4" stroke="#FF6B74" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>Eliminar movimiento
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ sheetEsPrestamo }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">¿Quién te debe?</div>
+          <input value="{{ nombreInput }}" sc-camel-on-change="{{ setNombre }}" placeholder="Ej. Andrés" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px;margin-bottom:14px">
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Motivo</div>
+          <input value="{{ entidadInput }}" sc-camel-on-change="{{ setEntidad }}" placeholder="Ej. Le presté para el arriendo" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px;margin-bottom:14px">
+          <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-bottom:18px">
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Valor de cada abono</div>
+              <input value="{{ limiteInput }}" sc-camel-on-change="{{ setLimite }}" sc-camel-input-mode="numeric" placeholder="150000" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;padding:0 14px">
+            </div>
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px"># Abonos</div>
+              <input value="{{ cuotasInput }}" sc-camel-on-change="{{ setCuotas }}" sc-camel-input-mode="numeric" placeholder="4" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;padding:0 14px">
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <div sc-camel-on-click="{{ confirmarSheet }}" style="{{ guardarStyle }}">{{ sheetBoton }}</div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ celebrando }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;z-index:60;pointer-events:none;display:flex;align-items:center;justify-content:center">
+      <div style="width:120px;height:120px;border-radius:50%;border:3px solid rgba(79,208,126,.7);animation:burst .8s cubic-bezier(.2,.8,.3,1) forwards"></div>
+      <div style="position:absolute;width:76px;height:76px;border-radius:50%;background:rgba(79,208,126,.16);border:1px solid rgba(79,208,126,.5);display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.2,.9,.25,1)">
+        <svg width="34" height="34" sc-camel-view-box="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="#4FD07E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ hayToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;bottom:110px;left:50%;z-index:62;padding:11px 18px;border-radius:14px;background:#1E1E24;border:1px solid #34343E;font:500 13px 'IBM Plex Sans',sans-serif;color:#E7E7EB;white-space:nowrap;box-shadow:0 12px 30px rgba(0,0,0,.5);animation:toastIn 2.6s ease forwards">{{ toast }}</div>
+    </sc-if>
+
+    <div sc-camel-on-click="{{ abrirSheetGasto }}" style="position:absolute;right:20px;bottom:104px;z-index:45;width:56px;height:56px;border-radius:50%;background:linear-gradient(150deg,#FF3A46,#D81E2B);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 12px 28px rgba(255,58,70,.35);transition:transform .2s cubic-bezier(.2,.9,.25,1)" style-hover="transform:scale(1.07) rotate(90deg)" style-active="transform:scale(.92)">
+      <svg width="22" height="22" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+    </div>
+
+    <div style="position:absolute;left:0;right:0;bottom:0;z-index:44;padding:10px 14px 26px;background:linear-gradient(to top,#0B0B0D 62%,rgba(11,11,13,.86) 88%,rgba(11,11,13,0));border-top:1px solid #1D1D22;display:flex;align-items:center;justify-content:space-around;backdrop-filter:blur(14px)">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <div sc-camel-on-click="{{ t.onTap }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;padding:6px 0;transition:transform .16s cubic-bezier(.2,.9,.25,1)" style-active="transform:scale(.9)">
+          <div style="{{ t.iconWrap }}">
+            <span style="font:600 13px 'Space Grotesk',sans-serif">{{ t.glyph }}</span>
+          </div>
+          <span style="{{ t.labelStyle }}">{{ t.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900},&quot;acento&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FF3A46&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#FF3A46&quot;,&quot;#E8452F&quot;,&quot;#D42A5B&quot;,&quot;#FF6B4A&quot;],&quot;section&quot;:&quot;Estilo&quot;}}">
+const F = n => '$' + Math.round(n).toLocaleString('es-CO');
+
+class Component extends DCLogic {
+  state = {
+    tab: 'hoy', detalle: null, sheet: null, editId: null,
+    monto: '', cat: 'Restaurantes', nombre: '', entidad: '', limite: '', numCuotas: '', medio: null,
+    frecuencia: 'Todos los días',
+    mounted: false, celebrando: false, toast: '', privado: false,
+    drag: {},
+    habits: [
+      {id:'gym', nombre:'Gimnasio', meta:'5× por semana · falta 1', glyph:'G', done:false, streak:12, best:21, dias:[1,1,0,1,1,0,0]},
+      {id:'leer', nombre:'Leer 20 min', meta:'Todos los días', glyph:'L', done:true, streak:34, best:34, dias:[1,1,1,1,1,1,1]},
+      {id:'agua', nombre:'Agua', meta:'5 de 8 vasos', glyph:'A', done:false, streak:6, best:14, dias:[1,0,1,1,1,0,0]},
+      {id:'dormir', nombre:'Dormir antes de las 11', meta:'Entre semana', glyph:'D', done:false, streak:3, best:9, dias:[0,1,1,0,1,0,0]}
+    ],
+    expandidos: {}, tarjetasAbiertas: {}, corte: '', pagoDia: '', tarjetaSel: null,
+    tarjetas: [
+      {id:'t1', nombre:'Visa Bancolombia', ultimos:'4417', cupo:2000000, base:788000, corte:15, pago:30, abonos:[
+        {id:'a1', monto:300000, fecha:'16 ago', concepto:'PSE'}
+      ]},
+      {id:'t2', nombre:'Mastercard Nu', ultimos:'8102', cupo:1200000, base:430000, corte:20, pago:5, abonos:[]}
+    ],
+    cats: [
+      {id:'c1', nombre:'Restaurantes', limite:200000, color:'#FF3A46'},
+      {id:'c2', nombre:'Comida / mercado', limite:220000, color:'#FF7A62'},
+      {id:'c3', nombre:'Transporte', limite:100000, color:'#B9B9C2'},
+      {id:'c4', nombre:'Ocio y salidas', limite:120000, color:'#8B8B95'},
+      {id:'c5', nombre:'Salud y gym', limite:60000, color:'#4FD07E'},
+      {id:'c6', nombre:'Suscripciones', limite:70000, color:'#6B6B78'}
+    ],
+    movs: [
+      {id:'m1', catId:'c1', nombre:'Cena con Ana', monto:96000, fecha:'16 ago', medio:'t1'},
+      {id:'m2', catId:'c1', nombre:'Domicilio Rappi', monto:52000, fecha:'12 ago'},
+      {id:'m3', catId:'c1', nombre:'Almuerzo Crepes', monto:38000, fecha:'8 ago'},
+      {id:'m4', catId:'c2', nombre:'Mercado quincena', monto:98000, fecha:'15 ago'},
+      {id:'m5', catId:'c2', nombre:'Frutas plaza', monto:24000, fecha:'11 ago'},
+      {id:'m6', catId:'c2', nombre:'Panadería', monto:20000, fecha:'7 ago'},
+      {id:'m7', catId:'c3', nombre:'Gasolina', monto:45000, fecha:'14 ago'},
+      {id:'m8', catId:'c3', nombre:'Uber noche', monto:19000, fecha:'10 ago'},
+      {id:'m9', catId:'c4', nombre:'Cine con Andrés', monto:28000, fecha:'17 ago', medio:'t1'},
+      {id:'m10', catId:'c4', nombre:'Cervezas viernes', monto:20000, fecha:'9 ago'},
+      {id:'m11', catId:'c5', nombre:'Mensualidad gimnasio', monto:45000, fecha:'2 ago'},
+      {id:'m12', catId:'c6', nombre:'Netflix', monto:26900, fecha:'5 ago'},
+      {id:'m13', catId:'c6', nombre:'Spotify', monto:16900, fecha:'5 ago'},
+      {id:'m14', catId:'c6', nombre:'iCloud', monto:9200, fecha:'3 ago'}
+    ],
+    prestamos: [
+      {id:'p1', nombre:'Andrés', entidad:'Le presté para el arriendo', cuota:150000, total:4, pagadas:1, pagadoMes:false, vence:'30 de ago'},
+      {id:'p2', nombre:'Mi hermana', entidad:'Mercado de julio', cuota:120000, total:3, pagadas:1, pagadoMes:true, vence:'5 de sept'},
+      {id:'p3', nombre:'Camilo', entidad:'Repuestos de la moto', cuota:200000, total:2, pagadas:0, pagadoMes:false, vence:'28 de ago'}
+    ]
+  };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem('hf_datos_v1');
+      if (raw) {
+        const d = JSON.parse(raw);
+        const s = {};
+        ['habits','cats','movs','prestamos','tarjetas'].forEach(k => { if (Array.isArray(d[k])) s[k] = d[k]; });
+        if (Object.keys(s).length) this.setState(s);
+      }
+    } catch (e) {}
+    requestAnimationFrame(() => setTimeout(() => this.setState({mounted:true}), 60));
+  }
+
+  componentDidUpdate() {
+    try {
+      const {habits, cats, movs, prestamos, tarjetas} = this.state;
+      localStorage.setItem('hf_datos_v1', JSON.stringify({habits, cats, movs, prestamos, tarjetas}));
+    } catch (e) {}
+  }
+
+  toast(t) {
+    clearTimeout(this._tt);
+    this.setState({toast:t});
+    this._tt = setTimeout(() => this.setState({toast:''}), 2600);
+  }
+
+  completar(id) {
+    const h = this.state.habits.find(x => x.id === id);
+    if (!h || h.done) { this.setState({drag:{}}); return; }
+    const habits = this.state.habits.map(x => x.id === id ? {...x, done:true, streak:x.streak+1, meta:x.id==='agua'?'8 de 8 vasos':x.meta} : x);
+    this.setState({habits, celebrando:true, drag:{}});
+    setTimeout(() => this.setState({celebrando:false}), 850);
+    this.toast('Racha de ' + h.nombre + ': ' + (h.streak+1) + ' días');
+  }
+
+  borrarHabito(id) {
+    const h = this.state.habits.find(x => x.id === id);
+    this.setState({habits: this.state.habits.filter(x => x.id !== id), detalle: null});
+    if (h) this.toast(h.nombre + ' eliminado');
+  }
+
+  tabIcon(active) {
+    return 'width:34px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:all .22s cubic-bezier(.2,.9,.25,1);'
+      + (active ? 'background:rgba(255,58,70,.15);color:#FF5560;box-shadow:inset 0 0 0 1px rgba(255,58,70,.28)' : 'background:transparent;color:#5E5E68');
+  }
+
+  renderVals() {
+    const s = this.state;
+    const m = s.mounted;
+    const done = s.habits.filter(h => h.done).length;
+    const total = s.habits.length || 1;
+    const libre = s.cats.reduce((a,c) => a + c.limite, 0) || 1;
+    const gastoDe = id => s.movs.filter(x => x.catId === id).reduce((a,x) => a + x.monto, 0);
+    const gastado = s.movs.reduce((a,x) => a + x.monto, 0);
+    const borrarMov = id => () => {
+      const mv = s.movs.find(x => x.id === id);
+      this.setState({movs: s.movs.filter(x => x.id !== id)});
+      if (mv) this.toast(mv.nombre + ' eliminado');
+    };
+    const dias = 13;
+    const restante = Math.max(0, libre - gastado);
+    const priv = s.privado;
+    const money = v => priv ? '••••' : F(v);
+    const deudaPrestamos = s.prestamos.reduce((a,p) => a + (p.total - p.pagadas) * p.cuota, 0);
+    const compras = id => s.movs.filter(x => x.medio === id).reduce((a,x) => a + x.monto, 0);
+    const saldoDe = t => Math.max(0, t.base + compras(t.id) - t.abonos.reduce((a,x) => a + x.monto, 0));
+    const nombreMedio = id => {
+      const t = s.tarjetas.find(x => x.id === id);
+      return t ? t.nombre : 'Efectivo / débito';
+    };
+    const tarjeta = s.tarjetas.reduce((a,t) => a + saldoDe(t), 0);
+    const cupoTotal = s.tarjetas.reduce((a,t) => a + t.cupo, 0) || 1;
+
+    const habitRow = h => {
+      const dx = s.drag[h.id] || 0;
+      return {
+        ...h,
+        dragStyle: {transform: 'translateX(' + dx + 'px)', transition: dx ? 'none' : 'transform .32s cubic-bezier(.2,.9,.25,1)'},
+        iconStyle: 'width:38px;height:38px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;'
+          + (h.done ? 'background:rgba(79,208,126,.14);color:#4FD07E' : 'background:#1D1D23;color:#9A9AA4'),
+        nameStyle: 'font:600 14.5px "IBM Plex Sans",sans-serif;'
+          + (h.done ? 'color:#6E6E78;text-decoration:line-through' : 'color:#F0F0F3'),
+        checkStyle: 'width:26px;height:26px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:all .28s cubic-bezier(.2,.9,.25,1);'
+          + (h.done ? 'background:#4FD07E;transform:scale(1)' : 'background:transparent;border:1.6px solid #3A3A44;transform:scale(.9)'),
+        onDown: e => { this._start = {x:e.clientX, id:h.id}; },
+        onMove: e => {
+          if (!this._start || this._start.id !== h.id || h.done) return;
+          const dx2 = Math.max(0, Math.min(120, e.clientX - this._start.x));
+          if (dx2 > 2) this.setState({drag: {[h.id]: dx2}});
+        },
+        onUp: () => {
+          if (!this._start) return;
+          const d = s.drag[h.id] || 0;
+          this._start = null;
+          if (d > 78) this.completar(h.id); else this.setState({drag:{}});
+        },
+        onTap: () => { if (!(s.drag[h.id] > 6)) this.completar(h.id); }
+      };
+    };
+
+    const diaStyle = v => 'flex:1;height:5px;border-radius:3px;background:' + (v ? 'var(--acc,#FF3A46)' : '#26262C');
+
+    const det = s.detalle ? s.habits.find(h => h.id === s.detalle) : null;
+    const heat = det ? Array.from({length:8}, (_,w) => ({
+      dias: Array.from({length:7}, (_,d) => {
+        const seed = (w*7+d+det.nombre.length*3) % 10;
+        const on = seed > (w < 3 ? 5 : 3);
+        return {style: 'height:11px;border-radius:3px;background:' + (on ? (w > 5 ? 'var(--acc,#FF3A46)' : 'rgba(255,58,70,' + (0.28 + w*0.09) + ')') : '#1E1E24')};
+      })
+    })) : [];
+
+    const abrir = (tipo, extra) => () => this.setState(Object.assign({sheet:tipo, monto:'', nombre:'', entidad:'', limite:'', numCuotas:'', corte:'', pagoDia:'', editId:null, tarjetaSel:null, medio:null}, extra || {}));
+
+    const sheetTitulos = {gasto:'Gasto rápido', habito:'Nuevo hábito', presupuesto: s.editId ? 'Editar categoría' : 'Nueva categoría', prestamo:'Nuevo por cobrar', mov:'Editar movimiento', tarjeta:'Nueva tarjeta', abono: s.editId ? 'Editar abono' : 'Registrar abono'};
+    const sheetBotones = {gasto:'Registrar gasto', habito:'Crear hábito', presupuesto: s.editId ? 'Guardar cambios' : 'Crear categoría', prestamo:'Añadir por cobrar', mov:'Guardar cambios', tarjeta:'Añadir tarjeta', abono: s.editId ? 'Guardar cambios' : 'Registrar abono'};
+    const listo = s.sheet === 'abono' ? !!parseFloat(s.limite)
+      : s.sheet === 'tarjeta' ? !!(s.nombre.trim() && parseFloat(s.limite))
+      : s.sheet === 'mov' ? !!(s.nombre.trim() && parseFloat(s.limite))
+      : s.sheet === 'gasto' ? !!(parseFloat(s.monto) && s.nombre.trim())
+      : s.sheet === 'habito' ? !!s.nombre.trim()
+      : s.sheet === 'presupuesto' ? !!(s.nombre.trim() && parseFloat(s.limite))
+      : s.sheet === 'prestamo' ? !!(s.nombre.trim() && parseFloat(s.limite) && parseInt(s.numCuotas,10)) : false;
+
+    const confirmar = () => {
+      const t = s.sheet;
+      if (t === 'gasto') {
+        const v = parseFloat(s.monto), n = s.nombre.trim();
+        if (!v || !n) return;
+        const cat = s.cats.find(c => c.nombre === s.cat) || s.cats[0];
+        if (!cat) return;
+        this.setState({movs: [{id:'m'+Date.now(), catId:cat.id, nombre:n, monto:v, fecha:'18 ago', medio:s.medio}, ...s.movs], sheet:null, monto:'', nombre:''});
+        this.toast(n + ' · ' + F(v) + ' con ' + nombreMedio(s.medio));
+      } else if (t === 'abono') {
+        const v = parseFloat(s.limite);
+        if (!v || !s.tarjetaSel) return;
+        const fecha = s.entidad.trim() || '18 ago';
+        const concepto = s.nombre.trim() || 'Abono';
+        const tarjetas = s.tarjetas.map(c => {
+          if (c.id !== s.tarjetaSel) return c;
+          const abonos = s.editId
+            ? c.abonos.map(a => a.id === s.editId ? {...a, monto:v, fecha, concepto} : a)
+            : [{id:'ab'+Date.now(), monto:v, fecha, concepto}, ...c.abonos];
+          return {...c, abonos};
+        });
+        this.setState({tarjetas, sheet:null, editId:null, tarjetasAbiertas: {...s.tarjetasAbiertas, [s.tarjetaSel]: true}});
+        this.toast(s.editId ? 'Abono actualizado' : 'Abonaste ' + F(v));
+      } else if (t === 'tarjeta') {
+        const n = s.nombre.trim(), cupo = parseFloat(s.limite);
+        if (!n || !cupo) return;
+        this.setState({tarjetas: [...s.tarjetas, {
+          id:'t'+Date.now(), nombre:n, ultimos:(s.entidad.trim() || '0000').slice(-4),
+          cupo, base: parseFloat(s.numCuotas) || 0,
+          corte: parseInt(s.corte,10) || 15, pago: parseInt(s.pagoDia,10) || 30, abonos:[]
+        }], sheet:null});
+        this.toast(n + ' añadida');
+      } else if (t === 'mov') {
+        const n = s.nombre.trim(), v = parseFloat(s.limite);
+        if (!n || !v) return;
+        const cat = s.cats.find(c => c.nombre === s.cat);
+        this.setState({movs: s.movs.map(x => x.id === s.editId ? {...x, nombre:n, monto:v, medio:s.medio, catId: cat ? cat.id : x.catId} : x), sheet:null, editId:null});
+        this.toast('Movimiento actualizado');
+      } else if (t === 'habito') {
+        const n = s.nombre.trim();
+        if (!n) return;
+        this.setState({habits: [...s.habits, {id:'h'+Date.now(), nombre:n, meta:s.frecuencia, glyph:n[0].toUpperCase(), done:false, streak:0, best:0, dias:[0,0,0,0,0,0,0]}], sheet:null, nombre:''});
+        this.toast('Hábito creado');
+      } else if (t === 'presupuesto') {
+        const n = s.nombre.trim(), lim = parseFloat(s.limite);
+        if (!n || !lim) return;
+        if (s.editId) {
+          this.setState({cats: s.cats.map(c => c.id === s.editId ? {...c, nombre:n, limite:lim} : c), sheet:null});
+          this.toast('Categoría actualizada');
+        } else {
+          const paleta = ['#FF3A46','#FF7A62','#B9B9C2','#8B8B95','#4FD07E','#6B6B78'];
+          this.setState({cats: [...s.cats, {id:'c'+Date.now(), nombre:n, gastado:0, limite:lim, color:paleta[s.cats.length % 6]}], sheet:null});
+          this.toast('Categoría creada');
+        }
+      } else if (t === 'prestamo') {
+        const n = s.nombre.trim(), cuota = parseFloat(s.limite), nc = parseInt(s.numCuotas, 10);
+        if (!n || !cuota || !nc) return;
+        this.setState({prestamos: [...s.prestamos, {id:'p'+Date.now(), nombre:n, entidad:s.entidad.trim() || 'Préstamo personal', cuota, total:nc, pagadas:0, pagadoMes:false, vence:'30 de ago'}], sheet:null});
+        this.toast(n + ' te debe ' + F(cuota * nc));
+      }
+    };
+
+    return {
+      theme: {display:'contents', '--acc': this.props.acento ?? '#FF3A46'},
+      isHoy: s.tab === 'hoy', isHabitos: s.tab === 'habitos', isDinero: s.tab === 'dinero', isStats: s.tab === 'stats',
+      fechaLarga: 'Martes 18 de agosto',
+      doneCount: done, totalCount: s.habits.length,
+      ringOffset: m ? 245 - 245 * (done/total) : 245,
+      ringTitulo: done === s.habits.length ? 'Día completo' : (s.habits.length - done) + ' hábitos por cerrar',
+      ringSub: done === s.habits.length ? 'Cerraste todo lo de hoy. Mañana empieza otra racha.' : 'Vas mejor que el 68% de tus martes. El gimnasio es el que más te cuesta.',
+      semana: [1,1,0,1,1,0,0].map((v,i) => ({dotStyle: 'width:22px;height:5px;border-radius:3px;background:' + (i === 4 ? 'var(--acc,#FF3A46)' : v ? '#3A3A44' : '#22222A')})),
+      goDinero: () => this.setState({tab:'dinero'}),
+      gastarHoy: priv ? '••••' : F(restante/dias),
+      libreUsadoPct: m ? Math.min(100, Math.round(gastado/libre*100)) + '%' : '0%',
+      libreRestante: money(restante), diasRestantes: dias,
+      habitRows: s.habits.map(habitRow),
+      alertas: [
+        {titulo:'Pago de tarjeta', sub:'Fecha límite el 30 de agosto', tag:'12 días',
+         dotStyle:'width:8px;height:8px;border-radius:50%;background:#FF3A46;box-shadow:0 0 10px rgba(255,58,70,.8)',
+         tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#FF6B74;padding:4px 9px;border-radius:8px;background:rgba(255,58,70,.12)'},
+        {titulo:'Restaurantes al 93%', sub:'$186.000 de $200.000 este ciclo', tag:'$14.000',
+         dotStyle:'width:8px;height:8px;border-radius:50%;background:#FF7A62',
+         tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#E0A08E;padding:4px 9px;border-radius:8px;background:rgba(255,122,98,.12)'},
+        {titulo:'Camilo no te ha pagado', sub:'Quedó de abonar el 28 de agosto', tag:'$200.000',
+         dotStyle:'width:8px;height:8px;border-radius:50%;background:#8B8B95',
+         tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#B9B9C2;padding:4px 9px;border-radius:8px;background:#1E1E24'}
+      ],
+      noDetalle: !s.detalle, hayDetalle: !!s.detalle, sinHabitos: s.habits.length === 0,
+      resumenSemana: s.habits.length + ' hábitos activos · 78% de constancia esta semana',
+      abrirNuevoHabito: abrir('habito'),
+      habitCards: s.habits.map(h => ({
+        ...h,
+        onOpen: () => this.setState({detalle:h.id}),
+        onDelete: e => { e.stopPropagation(); this.borrarHabito(h.id); },
+        iconStyle: 'width:38px;height:38px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;background:#1D1D23;color:#9A9AA4',
+        dias: h.dias.map(v => ({style: diaStyle(v)}))
+      })),
+      cerrarDetalle: () => this.setState({detalle:null}),
+      det: det ? {
+        nombre: det.nombre, meta: det.meta, glyph: det.glyph,
+        iconStyle: 'width:52px;height:52px;border-radius:16px;flex:none;display:flex;align-items:center;justify-content:center;background:rgba(255,58,70,.12);color:#FF6B74;border:1px solid rgba(255,58,70,.22)',
+        stats: [
+          {valor: det.streak, label:'Racha', valStyle:'font:700 22px "Space Grotesk",sans-serif;color:#FF6B74'},
+          {valor: det.best, label:'Mejor', valStyle:'font:700 22px "Space Grotesk",sans-serif;color:#F0F0F3'},
+          {valor: det.streak ? '82%' : '—', label:'8 semanas', valStyle:'font:700 22px "Space Grotesk",sans-serif;color:#F0F0F3'}
+        ],
+        heat,
+        insight: det.id === 'gym'
+          ? 'Fallas casi siempre los jueves. Las semanas que entrenas el miércoles, completas las 5 sesiones el 90% de las veces.'
+          : 'Tu mejor hora es entre 7 y 9 de la mañana. Cuando lo haces después de las 9 de la noche, la racha se rompe al tercer día.',
+        onDelete: () => this.borrarHabito(det.id)
+      } : null,
+      togglePrivacidad: () => this.setState({privado: !priv}),
+      montoStyle: 'font:700 19px "Space Grotesk",sans-serif;color:#F0F0F3;letter-spacing:-.02em',
+      montoGrandeStyle: 'font:700 25px "Space Grotesk",sans-serif;color:#F7F7F8;letter-spacing:-.02em',
+      disponible: money(1284000), deudaTarjeta: money(tarjeta), deudaTotal: money(tarjeta + deudaPrestamos),
+      ahorro: money(4180000), metaAhorro: '$6.000.000', aporteMes: money(840000),
+      ahorroPct: m ? '70%' : '0%',
+      proximoPago: (() => {
+        if (!s.tarjetas.length) return 'Sin tarjetas registradas';
+        const prox = s.tarjetas.map(t => ({t, dias: ((t.pago - 18) + 30) % 30})).sort((a,b) => a.dias - b.dias)[0];
+        return 'Pago el ' + prox.t.pago + ' · ' + prox.dias + (prox.dias === 1 ? ' día' : ' días')
+          + (s.tarjetas.length > 1 ? ' · ' + s.tarjetas.length + ' tarjetas' : '');
+      })(),
+      resumenTarjetas: priv ? '••••' : s.tarjetas.length + (s.tarjetas.length === 1 ? ' tarjeta · ' : ' tarjetas · ') + Math.round(tarjeta/cupoTotal*100) + '% del cupo usado',
+      abrirNuevaTarjeta: abrir('tarjeta'),
+      tarjetas: s.tarjetas.map(t => {
+        const saldo = saldoDe(t);
+        const pct = Math.min(100, Math.round(saldo/t.cupo*100));
+        const abierto = !!s.tarjetasAbiertas[t.id];
+        const span = ((t.pago - t.corte) + 30) % 30 || 30;
+        const trans = ((18 - t.corte) + 30) % 30;
+        const preCorte = trans > span;
+        const hoyPct = preCorte ? 0 : Math.max(4, Math.min(96, Math.round(trans/span*100)));
+        const faltanCorte = ((t.corte - 18) + 30) % 30;
+        const abonado = t.abonos.reduce((a,x) => a + x.monto, 0);
+        return {
+          nombre: t.nombre, ultimos: t.ultimos, corte: t.corte, pago: t.pago, abierto,
+          saldoTxt: money(saldo), cupoTxt: money(t.cupo), pctTxt: pct + '%',
+          abonadoTxt: money(abonado), sinAbonos: t.abonos.length === 0,
+          abonosLabel: t.abonos.length ? t.abonos.length + (t.abonos.length === 1 ? ' abono' : ' abonos') : 'Abonos',
+          preCorte, notaCiclo: 'Faltan ' + faltanCorte + (faltanCorte === 1 ? ' día' : ' días') + ' para el corte · aún no hay pago pendiente',
+          badgeStyle: 'padding:5px 10px;border-radius:8px;font:600 10.5px "IBM Plex Sans",sans-serif;letter-spacing:.05em;'
+            + (pct >= 30 ? 'background:rgba(255,58,70,.14);border:1px solid rgba(255,58,70,.3);color:#FF6B74' : 'background:rgba(79,208,126,.12);border:1px solid rgba(79,208,126,.28);color:#4FD07E'),
+          barStyle: 'height:100%;border-radius:4px;background:linear-gradient(90deg,#FF3A46,#FF7A62);width:' + (m ? pct : 0) + '%;transition:width 1.2s cubic-bezier(.2,.9,.25,1)',
+          progresoStyle: 'position:absolute;top:9px;left:0;height:2px;background:var(--acc,#FF3A46);border-radius:1px;width:' + (m && !preCorte ? hoyPct : 0) + '%;transition:width 1.3s cubic-bezier(.2,.9,.25,1)',
+          hoyStyle: preCorte ? 'display:none' : 'position:absolute;top:4px;left:' + (m ? hoyPct : 0) + '%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;transition:left 1.3s cubic-bezier(.2,.9,.25,1)',
+          chevronStyle: 'transition:transform .24s cubic-bezier(.2,.9,.25,1);transform:rotate(' + (abierto ? 90 : 0) + 'deg)',
+          abonos: t.abonos.map(a => ({
+            concepto: a.concepto, fecha: a.fecha, montoTxt: priv ? '••••' : F(a.monto),
+            onEdit: () => this.setState({sheet:'abono', editId:a.id, tarjetaSel:t.id, nombre:a.concepto, entidad:a.fecha, limite:String(a.monto), monto:''})
+          })),
+          onToggle: () => this.setState({tarjetasAbiertas: {...s.tarjetasAbiertas, [t.id]: !abierto}}),
+          onAbonar: () => this.setState({sheet:'abono', editId:null, tarjetaSel:t.id, nombre:'', entidad:'18 ago', limite:'', monto:''}),
+          onDelete: () => {
+            this.setState({tarjetas: s.tarjetas.filter(x => x.id !== t.id)});
+            this.toast(t.nombre + ' eliminada');
+          }
+        };
+      }),
+      sheetEsAbono: s.sheet === 'abono', sheetEsTarjeta: s.sheet === 'tarjeta',
+      editandoAbono: s.sheet === 'abono' && !!s.editId,
+      abonoTarjeta: (s.tarjetas.find(t => t.id === s.tarjetaSel) || {}).nombre || '',
+      abonoSaldo: (() => { const t = s.tarjetas.find(x => x.id === s.tarjetaSel); return t ? money(saldoDe(t)) : ''; })(),
+      abonoInfoStyle: 'display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:14px;background:#1B1B20;border:1px solid #292930;margin-bottom:18px',
+      atajosAbono: (() => {
+        const t = s.tarjetas.find(x => x.id === s.tarjetaSel);
+        const saldo = t ? saldoDe(t) : 0;
+        return [
+          {label:'Mínimo', valor: Math.round(saldo*0.1/1000)*1000},
+          {label:'Mitad', valor: Math.round(saldo*0.5/1000)*1000},
+          {label:'Todo', valor: saldo}
+        ].map(o => ({
+          label: o.label,
+          onPick: () => this.setState({limite: String(o.valor)}),
+          style: 'flex:1;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font:600 12.5px "IBM Plex Sans",sans-serif;cursor:pointer;transition:all .18s;'
+            + (s.limite === String(o.valor) && o.valor ? 'background:rgba(255,58,70,.14);color:#FF6B74;border:1px solid rgba(255,58,70,.32)' : 'background:#1B1B20;color:#9A9AA4;border:1px solid #292930')
+        }));
+      })(),
+      eliminarAbono: () => {
+        this.setState({tarjetas: s.tarjetas.map(t => t.id === s.tarjetaSel ? {...t, abonos: t.abonos.filter(a => a.id !== s.editId)} : t), sheet:null, editId:null});
+        this.toast('Abono eliminado');
+      },
+      corteInput: s.corte, pagoInput: s.pagoDia,
+      setCorte: e => this.setState({corte: e.target.value.replace(/[^0-9]/g,'').slice(0,2)}),
+      setPago: e => this.setState({pagoDia: e.target.value.replace(/[^0-9]/g,'').slice(0,2)}),
+      gastadoTotal: priv ? '••••' : F(gastado) + ' de ' + F(libre),
+
+      resumenPrestamos: priv ? '••••' : F(deudaPrestamos) + ' por cobrar · ' + s.prestamos.length + ' personas',
+      abrirNuevoPrestamo: abrir('prestamo'),
+      prestamos: s.prestamos.map(p => {
+        const pagadasReal = p.pagadas + (p.pagadoMes ? 1 : 0);
+        const restanteP = Math.max(0, (p.total - pagadasReal) * p.cuota);
+        return {
+          nombre: p.nombre, entidad: p.entidad, total: p.total, pagado: p.pagadoMes,
+          cuotaTxt: money(p.cuota), restanteTxt: money(restanteP),
+          numeroCuota: Math.min(p.total, pagadasReal + (p.pagadoMes ? 0 : 1)),
+          venceTxt: p.pagadoMes ? 'Te pagó este mes' : 'Te debe pagar el ' + p.vence,
+          venceStyle: 'font:400 11.5px "IBM Plex Sans",sans-serif;margin-top:3px;color:' + (p.pagadoMes ? '#4FD07E' : '#FF6B74'),
+          cardStyle: 'padding:17px;border-radius:20px;background:#141417;border:1px solid ' + (p.pagadoMes ? '#22382A' : '#26262C') + ';animation:rowIn .3s cubic-bezier(.2,.9,.25,1);transition:border-color .3s',
+          cuotas: Array.from({length: p.total}, (_, i) => ({
+            style: 'flex:1;height:7px;border-radius:2px;transition:background .3s ' + Math.min(i*0.012, .4) + 's;background:'
+              + (i < p.pagadas ? '#4FD07E' : (i === p.pagadas && p.pagadoMes) ? '#4FD07E' : (i === p.pagadas) ? 'var(--acc,#FF3A46)' : '#26262C')
+          })),
+          btnTexto: p.pagadoMes ? 'Recibido' : 'Marcar recibido',
+          btnStyle: 'display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:12px;cursor:pointer;font:600 12.5px "IBM Plex Sans",sans-serif;transition:all .22s cubic-bezier(.2,.9,.25,1);'
+            + (p.pagadoMes ? 'background:rgba(79,208,126,.13);border:1px solid rgba(79,208,126,.3);color:#4FD07E' : 'background:linear-gradient(150deg,#FF3A46,#D81E2B);border:1px solid transparent;color:#fff;box-shadow:0 6px 16px rgba(255,58,70,.25)'),
+          onToggle: () => {
+            const nuevo = !p.pagadoMes;
+            this.setState({prestamos: s.prestamos.map(x => x.id === p.id ? {...x, pagadoMes: nuevo} : x)});
+            this.toast(nuevo ? p.nombre + ' te pagó ' + F(p.cuota) : p.nombre + ': abono pendiente de nuevo');
+          },
+          onDelete: () => {
+            this.setState({prestamos: s.prestamos.filter(x => x.id !== p.id)});
+            this.toast(p.nombre + ' eliminado');
+          }
+        };
+      }),
+
+      abrirNuevoPresupuesto: abrir('presupuesto'),
+      presupuestos: s.cats.map(c => {
+        const g = gastoDe(c.id);
+        const pct = Math.min(100, Math.round(g/c.limite*100));
+        const propios = s.movs.filter(x => x.catId === c.id);
+        const abierto = !!s.expandidos[c.id];
+        return {
+          nombre: c.nombre, abierto,
+          conteo: propios.length ? '· ' + propios.length : '',
+          texto: priv ? '••••' : F(g) + ' / ' + F(c.limite),
+          dotStyle: 'width:9px;height:9px;border-radius:3px;background:' + c.color,
+          montoStyle: 'font:600 12.5px "Space Grotesk",sans-serif;color:' + (pct >= 90 ? '#FF6B74' : '#8B8B95'),
+          barStyle: 'height:100%;border-radius:3px;background:' + c.color + ';width:' + (m ? pct : 0) + '%;transition:width 1.1s cubic-bezier(.2,.9,.25,1)',
+          chevronStyle: 'transition:transform .24s cubic-bezier(.2,.9,.25,1);transform:rotate(' + (abierto ? 90 : 0) + 'deg)',
+          vacio: propios.length === 0,
+          movs: propios.map(x => ({
+            nombre: x.nombre, fecha: x.fecha, montoTxt: priv ? '••••' : F(x.monto),
+            medio: nombreMedio(x.medio),
+            metaStyle: 'font:400 11px "IBM Plex Sans",sans-serif;margin-top:2px;color:' + (x.medio ? '#C7727A' : '#65656E'),
+            onDelete: borrarMov(x.id),
+            onEdit: () => this.setState({sheet:'mov', editId:x.id, nombre:x.nombre, limite:String(x.monto), cat:c.nombre, medio:x.medio || null, monto:''})
+          })),
+          onToggle: () => this.setState({expandidos: {...s.expandidos, [c.id]: !abierto}}),
+          onAddMov: () => this.setState({sheet:'gasto', cat:c.nombre, monto:'', nombre:'', editId:null}),
+          onEdit: () => this.setState({sheet:'presupuesto', editId:c.id, nombre:c.nombre, limite:String(c.limite), monto:''})
+        };
+      }),
+      eliminarPresupuesto: () => {
+        const c = s.cats.find(x => x.id === s.editId);
+        this.setState({cats: s.cats.filter(x => x.id !== s.editId), movs: s.movs.filter(x => x.catId !== s.editId), sheet:null, editId:null});
+        if (c) this.toast(c.nombre + ' eliminada');
+      },
+      eliminarMov: () => {
+        const mv = s.movs.find(x => x.id === s.editId);
+        this.setState({movs: s.movs.filter(x => x.id !== s.editId), sheet:null, editId:null});
+        if (mv) this.toast(mv.nombre + ' eliminado');
+      },
+      plan: [
+        {nombre:'Esenciales y fijos (50%)', monto: money(2400000)},
+        {nombre:'Ahorro automático (20%)', monto: money(960000)},
+        {nombre:'Inversión (10%)', monto: money(480000)},
+        {nombre:'Gasto libre (20%)', monto: money(960000)}
+      ],
+      barras: [58,64,52,78,71,86].map((v,i) => ({
+        label: 'S' + (i+1),
+        barStyle: 'width:100%;border-radius:6px 6px 3px 3px;height:' + (m ? v : 0) + '%;transition:height .9s cubic-bezier(.2,.9,.25,1) ' + (i*0.08) + 's;background:' + (i === 5 ? 'linear-gradient(180deg,#FF3A46,#B31C27)' : '#2B2B33')
+      })),
+      mountedOpacity: m ? 1 : 0,
+      lineOffset: m ? 0 : 420,
+      kpis: [
+        {valor:'34', label:'Racha más larga', valStyle:'font:700 24px "Space Grotesk",sans-serif;color:#F0F0F3'},
+        {valor:'82%', label:'Constancia global', valStyle:'font:700 24px "Space Grotesk",sans-serif;color:#4FD07E'},
+        {valor: money(5520000), label:'Ahorrado en 2026', valStyle:'font:700 20px "Space Grotesk",sans-serif;color:#F0F0F3'},
+        {valor:'-19%', label:'Gasto vs julio', valStyle:'font:700 24px "Space Grotesk",sans-serif;color:#FF6B74'}
+      ],
+
+      sheetAbierto: !!s.sheet,
+      sheetTitulo: sheetTitulos[s.sheet] || '',
+      sheetBoton: sheetBotones[s.sheet] || 'Guardar',
+      sheetEsMonto: s.sheet === 'gasto',
+      sheetEsGasto: s.sheet === 'gasto',
+      sheetEsHabito: s.sheet === 'habito',
+      sheetEsPresupuesto: s.sheet === 'presupuesto',
+      sheetEsPrestamo: s.sheet === 'prestamo',
+      sheetEsMov: s.sheet === 'mov',
+      editandoPresupuesto: s.sheet === 'presupuesto' && !!s.editId,
+      abrirSheetGasto: abrir('gasto'),
+      cerrarSheet: () => this.setState({sheet:null}),
+      montoInput: '$' + (s.monto ? Number(s.monto).toLocaleString('es-CO') : '0'),
+      nombreInput: s.nombre, entidadInput: s.entidad, limiteInput: s.limite, cuotasInput: s.numCuotas,
+      setNombre: e => this.setState({nombre: e.target.value}),
+      setEntidad: e => this.setState({entidad: e.target.value}),
+      setLimite: e => this.setState({limite: e.target.value.replace(/[^0-9]/g,'')}),
+      setCuotas: e => this.setState({numCuotas: e.target.value.replace(/[^0-9]/g,'')}),
+      frecuencias: ['Todos los días','Entre semana','3× por semana','5× por semana'].map(f => ({
+        label: f,
+        onPick: () => this.setState({frecuencia: f}),
+        style: 'padding:9px 14px;border-radius:12px;font:500 12.5px "IBM Plex Sans",sans-serif;cursor:pointer;transition:all .18s;'
+          + (s.frecuencia === f ? 'background:rgba(255,58,70,.14);color:#FF6B74;border:1px solid rgba(255,58,70,.32)' : 'background:#1B1B20;color:#9A9AA4;border:1px solid #292930')
+      })),
+      medios: [{id:null, label:'Efectivo / débito'}].concat(s.tarjetas.map(t => ({id:t.id, label:t.nombre + ' ••' + t.ultimos}))).map(o => ({
+        label: o.label,
+        onPick: () => this.setState({medio: o.id}),
+        style: 'flex:none;padding:8px 14px;border-radius:11px;font:500 12.5px "IBM Plex Sans",sans-serif;cursor:pointer;white-space:nowrap;transition:all .18s;'
+          + (s.medio === o.id ? 'background:rgba(255,58,70,.14);color:#FF6B74;border:1px solid rgba(255,58,70,.32)' : 'background:#1B1B20;color:#9A9AA4;border:1px solid #292930')
+      })),
+      chips: s.cats.map(c => ({
+        nombre: c.nombre,
+        onPick: () => this.setState({cat:c.nombre}),
+        style: 'flex:none;padding:8px 14px;border-radius:11px;font:500 12.5px "IBM Plex Sans",sans-serif;cursor:pointer;white-space:nowrap;transition:all .18s;'
+          + (s.cat === c.nombre ? 'background:rgba(255,58,70,.14);color:#FF6B74;border:1px solid rgba(255,58,70,.32)' : 'background:#1B1B20;color:#9A9AA4;border:1px solid #292930')
+      })),
+      teclas: ['1','2','3','4','5','6','7','8','9','000','0','⌫'].map(k => ({
+        label: k,
+        onTap: () => {
+          if (k === '⌫') return this.setState({monto: s.monto.slice(0, k === '⌫' ? -1 : -1)});
+          if (s.monto.length + k.length > 9) return;
+          if (!s.monto && k === '000') return;
+          this.setState({monto: s.monto + k});
+        }
+      })),
+      guardarStyle: 'height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font:600 15px "IBM Plex Sans",sans-serif;cursor:pointer;transition:all .2s;'
+        + (listo ? 'background:linear-gradient(150deg,#FF3A46,#D81E2B);color:#fff;box-shadow:0 10px 24px rgba(255,58,70,.28)' : 'background:#1B1B20;color:#55555E'),
+      confirmarSheet: confirmar,
+
+      celebrando: s.celebrando,
+      hayToast: !!s.toast, toast: s.toast,
+      tabs: [
+        {id:'hoy', label:'Hoy', glyph:'H'},
+        {id:'habitos', label:'Hábitos', glyph:'R'},
+        {id:'dinero', label:'Dinero', glyph:'$'},
+        {id:'stats', label:'Progreso', glyph:'%'}
+      ].map(t => ({
+        ...t,
+        onTap: () => this.setState({tab:t.id, detalle:null}),
+        iconWrap: this.tabIcon(s.tab === t.id),
+        labelStyle: 'font:500 10.5px "IBM Plex Sans",sans-serif;transition:color .2s;color:' + (s.tab === t.id ? '#FF5560' : '#5E5E68')
+      }))
+    };
+  }
+}
+</script>
+
+
+</body></body></html>
