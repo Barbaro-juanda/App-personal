@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html><head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#08080A">
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
 <script src="src/support.js"></script>
@@ -13,7 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
-html,body{margin:0;padding:0;background:#08080A;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+html,body{margin:0;padding:0;background:#0B0B0D;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;height:100%;overflow:hidden;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+body{text-size-adjust:100%;-webkit-text-size-adjust:100%}
 *{box-sizing:border-box}
 a{color:#FF3A46;text-decoration:none}a:hover{color:#FF6B74}
 input{font-family:'IBM Plex Sans',system-ui,sans-serif}
@@ -33,19 +37,11 @@ input:focus{outline:none;border-color:#FF3A46 !important}
 </helmet>
 
 <div style="{{ theme }}">
-<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px;background:radial-gradient(1200px 700px at 50% -10%, #17171B 0%, #08080A 62%)">
-  <div style="width:390px;height:844px;position:relative;border-radius:46px;background:#0B0B0D;border:1px solid #232328;box-shadow:0 40px 90px rgba(0,0,0,.7), 0 0 0 9px #141417;overflow:hidden;display:flex;flex-direction:column">
+<div style="min-height:100vh;min-height:100dvh;display:flex;justify-content:center;background:#0B0B0D">
+  <div style="width:100%;max-width:520px;height:100vh;height:100dvh;position:relative;background:radial-gradient(1200px 700px at 50% -10%, #17171B 0%, #0B0B0D 62%);overflow:hidden;display:flex;flex-direction:column">
 
-    <div style="position:absolute;top:0;left:0;right:0;height:54px;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:18px 26px 0;pointer-events:none">
-      <span style="font:600 13px 'Space Grotesk',sans-serif;color:#F4F4F5">9:41</span>
-      <div style="width:96px;height:26px;border-radius:14px;background:#000;position:absolute;left:50%;transform:translateX(-50%);top:12px"></div>
-      <div style="display:flex;align-items:center;gap:5px">
-        <svg width="17" height="11" sc-camel-view-box="0 0 17 11" fill="none"><rect x="0" y="7" width="3" height="4" rx="1" fill="#F4F4F5"></rect><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#F4F4F5"></rect><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#F4F4F5"></rect><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#F4F4F5"></rect></svg>
-        <svg width="24" height="12" sc-camel-view-box="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3.2" stroke="#6B6B75"></rect><rect x="2" y="2" width="14" height="8" rx="2" fill="#F4F4F5"></rect><path d="M22 4v4a2.2 2.2 0 0 0 0-4z" fill="#6B6B75"></path></svg>
-      </div>
-    </div>
 
-    <div style="flex:1;overflow-y:auto;overflow-x:hidden;padding:62px 0 108px;position:relative">
+    <div style="flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:calc(env(safe-area-inset-top,0px) + 18px) 0 calc(env(safe-area-inset-bottom,0px) + 104px);position:relative">
 
       <sc-if value="{{ isHoy }}" hint-placeholder-val="{{ true }}">
       <div style="animation:scrIn .34s cubic-bezier(.2,.9,.25,1);padding:0 20px">
@@ -576,7 +572,7 @@ input:focus{outline:none;border-color:#FF3A46 !important}
     <sc-if value="{{ sheetAbierto }}" hint-placeholder-val="{{ false }}">
     <div>
       <div sc-camel-on-click="{{ cerrarSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(3px);z-index:50;animation:fadeIn .22s ease"></div>
-      <div style="position:absolute;left:0;right:0;bottom:0;z-index:51;border-radius:28px 28px 0 0;background:#131316;border-top:1px solid #2C2C34;padding:12px 20px 28px;animation:sheetUp .34s cubic-bezier(.2,.9,.25,1);max-height:88%;overflow-y:auto">
+      <div style="position:absolute;left:0;right:0;bottom:0;z-index:51;border-radius:28px 28px 0 0;background:#131316;border-top:1px solid #2C2C34;padding:12px 20px calc(env(safe-area-inset-bottom,0px) + 28px);animation:sheetUp .34s cubic-bezier(.2,.9,.25,1);max-height:88%;overflow-y:auto">
         <div style="width:38px;height:4px;border-radius:2px;background:#33333C;margin:0 auto 18px"></div>
         <div style="font:600 16px 'IBM Plex Sans',sans-serif;color:#F0F0F3;margin-bottom:18px">{{ sheetTitulo }}</div>
 
@@ -754,14 +750,14 @@ input:focus{outline:none;border-color:#FF3A46 !important}
     </sc-if>
 
     <sc-if value="{{ hayToast }}" hint-placeholder-val="{{ false }}">
-    <div style="position:absolute;bottom:110px;left:50%;z-index:62;padding:11px 18px;border-radius:14px;background:#1E1E24;border:1px solid #34343E;font:500 13px 'IBM Plex Sans',sans-serif;color:#E7E7EB;white-space:nowrap;box-shadow:0 12px 30px rgba(0,0,0,.5);animation:toastIn 2.6s ease forwards">{{ toast }}</div>
+    <div style="position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 98px);left:50%;z-index:62;padding:11px 18px;border-radius:14px;background:#1E1E24;border:1px solid #34343E;font:500 13px 'IBM Plex Sans',sans-serif;color:#E7E7EB;white-space:nowrap;box-shadow:0 12px 30px rgba(0,0,0,.5);animation:toastIn 2.6s ease forwards">{{ toast }}</div>
     </sc-if>
 
-    <div sc-camel-on-click="{{ abrirSheetGasto }}" style="position:absolute;right:20px;bottom:104px;z-index:45;width:56px;height:56px;border-radius:50%;background:linear-gradient(150deg,#FF3A46,#D81E2B);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 12px 28px rgba(255,58,70,.35);transition:transform .2s cubic-bezier(.2,.9,.25,1)" style-hover="transform:scale(1.07) rotate(90deg)" style-active="transform:scale(.92)">
+    <div sc-camel-on-click="{{ abrirSheetGasto }}" style="position:absolute;right:20px;bottom:calc(env(safe-area-inset-bottom,0px) + 92px);z-index:45;width:56px;height:56px;border-radius:50%;background:linear-gradient(150deg,#FF3A46,#D81E2B);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 12px 28px rgba(255,58,70,.35);transition:transform .2s cubic-bezier(.2,.9,.25,1)" style-hover="transform:scale(1.07) rotate(90deg)" style-active="transform:scale(.92)">
       <svg width="22" height="22" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
     </div>
 
-    <div style="position:absolute;left:0;right:0;bottom:0;z-index:44;padding:10px 14px 26px;background:linear-gradient(to top,#0B0B0D 62%,rgba(11,11,13,.86) 88%,rgba(11,11,13,0));border-top:1px solid #1D1D22;display:flex;align-items:center;justify-content:space-around;backdrop-filter:blur(14px)">
+    <div style="position:absolute;left:0;right:0;bottom:0;z-index:44;padding:10px 14px calc(env(safe-area-inset-bottom,0px) + 14px);background:linear-gradient(to top,#0B0B0D 62%,rgba(11,11,13,.86) 88%,rgba(11,11,13,0));border-top:1px solid #1D1D22;display:flex;align-items:center;justify-content:space-around;backdrop-filter:blur(14px)">
       <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
         <div sc-camel-on-click="{{ t.onTap }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;padding:6px 0;transition:transform .16s cubic-bezier(.2,.9,.25,1)" style-active="transform:scale(.9)">
           <div style="{{ t.iconWrap }}">

@@ -5,3 +5,4 @@ node_modules/
 *.jpg
 "App de hábitos y finanzas.zip"
 App de hábitos y finanzas.zip
+.build-cache/

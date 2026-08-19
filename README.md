@@ -12,11 +12,21 @@ de finanzas personales (tarjetas de crédito, cupos, cortes, abonos y metas de a
 | **Dinero** | Disponible vs. deuda, tarjetas con cupo/corte/pago, abonos y meta de ahorro |
 | **Progreso** | Constancia y gasto variable de las últimas 6 semanas + correlación hábitos × dinero |
 
+## Pantalla completa
+
+La app ocupa todo el viewport: no dibuja marco de teléfono ni barra de estado simulada
+(hora, señal, batería). Usa `100dvh` y `env(safe-area-inset-*)`, así que respeta la
+Dynamic Island y el indicador de inicio del iPhone 16 Pro (402 × 874 pt).
+
+Para que quede sin las barras de Safari, ábrela en el iPhone y usa
+**Compartir → Añadir a pantalla de inicio**. Se lanza a pantalla completa.
+
 ## Archivos
 
 - **`index.html`** — build autocontenido. React, el runtime y las fuentes IBM Plex Sans
   van embebidos, así que abre sin dependencias externas ni servidor. Es lo que sirve
-  GitHub Pages.
+  GitHub Pages. **Generado — no editarlo a mano.**
+- **`build.py`** — regenera `index.html` desde el fuente: `python3 build.py`
 - **`App Habitos y Finanzas.dc.html`** — el fuente editable (Claude Design Component):
   plantilla `<x-dc>` + la lógica en `<script type="text/x-dc">`. Carga React y las
   fuentes por CDN.
