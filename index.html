@@ -410,8 +410,28 @@ input:focus{outline:none;border-color:#FF3A46 !important}
             <div style="height:100%;border-radius:4px;background:linear-gradient(90deg,#4FD07E,#8FE3A8);width:{{ ahorroPct }};transition:width 1.2s cubic-bezier(.2,.9,.25,1)"></div>
           </div>
           <div style="display:flex;justify-content:space-between;margin-top:9px;font:400 11.5px 'IBM Plex Sans',sans-serif;color:#75757F">
-            <span>70% de la meta</span><span>+{{ aporteMes }} este mes</span>
+            <span>{{ ahorroPctTxt }}</span><span>{{ aporteMes }} este mes</span>
           </div>
+
+          <div sc-camel-on-click="{{ abrirAhorro }}" style="height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(79,208,126,.1);border:1px solid rgba(79,208,126,.28);color:#4FD07E;font:600 13px 'IBM Plex Sans',sans-serif;cursor:pointer;margin-top:14px;transition:transform .18s" style-active="transform:scale(.97)">
+            <svg width="13" height="13" sc-camel-view-box="0 0 22 22" fill="none"><path d="M11 4.5V17.5M4.5 11H17.5" stroke="#4FD07E" stroke-width="2.6" stroke-linecap="round"></path></svg>Registrar ingreso
+          </div>
+
+          <sc-if value="{{ hayAhorroMovs }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:16px;padding-top:15px;border-top:1px solid #22222A">
+            <div style="font:500 10.5px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:10px">Últimos movimientos</div>
+            <sc-for list="{{ ahorroHist }}" as="a" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:10px;padding:7px 0">
+                <div style="{{ a.iconStyle }}">{{ a.glyph }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font:500 13px 'IBM Plex Sans',sans-serif;color:#E7E7EB;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.nombre }}</div>
+                  <div style="font:400 11px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:2px">{{ a.fecha }}</div>
+                </div>
+                <span style="{{ a.signoStyle }}">{{ a.signo }}</span>
+              </div>
+            </sc-for>
+          </div>
+          </sc-if>
         </div>
 
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
@@ -691,6 +711,28 @@ input:focus{outline:none;border-color:#FF3A46 !important}
         </div>
         </sc-if>
 
+        <sc-if value="{{ sheetEsAhorro }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="display:flex;gap:8px;margin-bottom:18px">
+            <sc-for list="{{ tiposAhorro }}" as="o" hint-placeholder-count="2">
+              <div sc-camel-on-click="{{ o.onPick }}" style="{{ o.style }}">{{ o.label }}</div>
+            </sc-for>
+          </div>
+          <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Monto</div>
+          <input value="{{ limiteInput }}" sc-camel-on-change="{{ setLimite }}" sc-camel-input-mode="numeric" placeholder="600000" style="width:100%;height:52px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;padding:0 15px;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-bottom:18px">
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Concepto</div>
+              <input value="{{ nombreInput }}" sc-camel-on-change="{{ setNombre }}" placeholder="Quincena" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px">
+            </div>
+            <div>
+              <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Fecha</div>
+              <input value="{{ entidadInput }}" sc-camel-on-change="{{ setEntidad }}" placeholder="18 ago" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px">
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
         <sc-if value="{{ sheetEsTarjeta }}" hint-placeholder-val="{{ false }}">
         <div>
           <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Nombre de la tarjeta</div>
@@ -853,6 +895,12 @@ class Component extends DCLogic {
       {id:'p1', nombre:'Andrés', entidad:'Le presté para el arriendo', cuota:150000, total:4, pagadas:1, pagadoMes:false, vence:'30 de ago'},
       {id:'p2', nombre:'Mi hermana', entidad:'Mercado de julio', cuota:120000, total:3, pagadas:1, pagadoMes:true, vence:'5 de sept'},
       {id:'p3', nombre:'Camilo', entidad:'Repuestos de la moto', cuota:200000, total:2, pagadas:0, pagadoMes:false, vence:'28 de ago'}
+    ],
+    ahorroBase: 3340000,
+    meta: 6000000,
+    ahorroMovs: [
+      {id:'s1', tipo:'in', nombre:'Quincena de agosto', monto:600000, fecha:'15 ago'},
+      {id:'s2', tipo:'in', nombre:'Venta de la bici', monto:240000, fecha:'8 ago'}
     ]
   };
 
@@ -862,7 +910,8 @@ class Component extends DCLogic {
       if (raw) {
         const d = JSON.parse(raw);
         const s = {};
-        ['habits','cats','movs','prestamos','tarjetas'].forEach(k => { if (Array.isArray(d[k])) s[k] = d[k]; });
+        ['habits','cats','movs','prestamos','tarjetas','ahorroMovs'].forEach(k => { if (Array.isArray(d[k])) s[k] = d[k]; });
+        ['ahorroBase','meta'].forEach(k => { if (typeof d[k] === 'number' && isFinite(d[k])) s[k] = d[k]; });
         if (Object.keys(s).length) this.setState(s);
       }
     } catch (e) {}
@@ -871,8 +920,8 @@ class Component extends DCLogic {
 
   componentDidUpdate() {
     try {
-      const {habits, cats, movs, prestamos, tarjetas} = this.state;
-      localStorage.setItem('hf_datos_v1', JSON.stringify({habits, cats, movs, prestamos, tarjetas}));
+      const {habits, cats, movs, prestamos, tarjetas, ahorroMovs, ahorroBase, meta} = this.state;
+      localStorage.setItem('hf_datos_v1', JSON.stringify({habits, cats, movs, prestamos, tarjetas, ahorroMovs, ahorroBase, meta}));
     } catch (e) {}
   }
 
@@ -919,6 +968,11 @@ class Component extends DCLogic {
     const restante = Math.max(0, libre - gastado);
     const priv = s.privado;
     const money = v => priv ? '••••' : F(v);
+
+    const sumaAhorro = f => s.ahorroMovs.filter(f).reduce((a, x) => a + x.monto, 0);
+    const saldoAhorro = Math.max(0, s.ahorroBase + sumaAhorro(a => a.tipo === 'in') - sumaAhorro(a => a.tipo === 'out'));
+    const aporteMes = sumaAhorro(a => a.tipo === 'in' && /ago/.test(a.fecha)) - sumaAhorro(a => a.tipo === 'out' && /ago/.test(a.fecha));
+    const pctAhorro = Math.min(100, Math.round(saldoAhorro / (s.meta || 1) * 100));
     const deudaPrestamos = s.prestamos.reduce((a,p) => a + (p.total - p.pagadas) * p.cuota, 0);
     const compras = id => s.movs.filter(x => x.medio === id).reduce((a,x) => a + x.monto, 0);
     const saldoDe = t => Math.max(0, t.base + compras(t.id) - t.abonos.reduce((a,x) => a + x.monto, 0));
@@ -967,11 +1021,12 @@ class Component extends DCLogic {
       })
     })) : [];
 
-    const abrir = (tipo, extra) => () => this.setState(Object.assign({sheet:tipo, monto:'', nombre:'', entidad:'', limite:'', numCuotas:'', corte:'', pagoDia:'', editId:null, tarjetaSel:null, medio:null}, extra || {}));
+    const abrir = (tipo, extra) => () => this.setState(Object.assign({sheet:tipo, monto:'', nombre:'', entidad:'', limite:'', numCuotas:'', corte:'', pagoDia:'', editId:null, tarjetaSel:null, medio:null, tipoAhorro:'in'}, extra || {}));
 
-    const sheetTitulos = {gasto:'Gasto rápido', habito:'Nuevo hábito', presupuesto: s.editId ? 'Editar categoría' : 'Nueva categoría', prestamo:'Nuevo por cobrar', mov:'Editar movimiento', tarjeta:'Nueva tarjeta', abono: s.editId ? 'Editar abono' : 'Registrar abono'};
-    const sheetBotones = {gasto:'Registrar gasto', habito:'Crear hábito', presupuesto: s.editId ? 'Guardar cambios' : 'Crear categoría', prestamo:'Añadir por cobrar', mov:'Guardar cambios', tarjeta:'Añadir tarjeta', abono: s.editId ? 'Guardar cambios' : 'Registrar abono'};
-    const listo = s.sheet === 'abono' ? !!parseFloat(s.limite)
+    const sheetTitulos = {gasto:'Gasto rápido', habito:'Nuevo hábito', presupuesto: s.editId ? 'Editar categoría' : 'Nueva categoría', prestamo:'Nuevo por cobrar', mov:'Editar movimiento', tarjeta:'Nueva tarjeta', abono: s.editId ? 'Editar abono' : 'Registrar abono', ahorro: s.tipoAhorro === 'out' ? 'Retiro de ahorros' : 'Ingreso a ahorros'};
+    const sheetBotones = {gasto:'Registrar gasto', habito:'Crear hábito', presupuesto: s.editId ? 'Guardar cambios' : 'Crear categoría', prestamo:'Añadir por cobrar', mov:'Guardar cambios', tarjeta:'Añadir tarjeta', abono: s.editId ? 'Guardar cambios' : 'Registrar abono', ahorro: s.tipoAhorro === 'out' ? 'Registrar retiro' : 'Registrar ingreso'};
+    const listo = s.sheet === 'ahorro' ? !!parseFloat(s.limite)
+      : s.sheet === 'abono' ? !!parseFloat(s.limite)
       : s.sheet === 'tarjeta' ? !!(s.nombre.trim() && parseFloat(s.limite))
       : s.sheet === 'mov' ? !!(s.nombre.trim() && parseFloat(s.limite))
       : s.sheet === 'gasto' ? !!(parseFloat(s.monto) && s.nombre.trim())
@@ -1002,6 +1057,13 @@ class Component extends DCLogic {
         });
         this.setState({tarjetas, sheet:null, editId:null, tarjetasAbiertas: {...s.tarjetasAbiertas, [s.tarjetaSel]: true}});
         this.toast(s.editId ? 'Abono actualizado' : 'Abonaste ' + F(v));
+      } else if (t === 'ahorro') {
+        const v = parseFloat(s.limite);
+        if (!v) return;
+        const esIn = s.tipoAhorro !== 'out';
+        const n = s.nombre.trim() || (esIn ? 'Ingreso' : 'Retiro');
+        this.setState({ahorroMovs: [{id:'s'+Date.now(), tipo: esIn ? 'in' : 'out', nombre:n, monto:v, fecha: s.entidad.trim() || '18 ago'}, ...s.ahorroMovs], sheet:null});
+        this.toast(esIn ? 'Ahorraste ' + F(v) : 'Retiraste ' + F(v));
       } else if (t === 'tarjeta') {
         const n = s.nombre.trim(), cupo = parseFloat(s.limite);
         if (!n || !cupo) return;
@@ -1095,8 +1157,30 @@ class Component extends DCLogic {
       montoStyle: 'font:700 19px "Space Grotesk",sans-serif;color:#F0F0F3;letter-spacing:-.02em',
       montoGrandeStyle: 'font:700 25px "Space Grotesk",sans-serif;color:#F7F7F8;letter-spacing:-.02em',
       disponible: money(1284000), deudaTarjeta: money(tarjeta), deudaTotal: money(tarjeta + deudaPrestamos),
-      ahorro: money(4180000), metaAhorro: '$6.000.000', aporteMes: money(840000),
-      ahorroPct: m ? '70%' : '0%',
+      ahorro: money(saldoAhorro), metaAhorro: F(s.meta), aporteMes: (aporteMes < 0 ? '-' : '+') + money(Math.abs(aporteMes)),
+      ahorroPct: m ? pctAhorro + '%' : '0%',
+      ahorroPctTxt: pctAhorro + '% de la meta',
+      abrirAhorro: abrir('ahorro', {tipoAhorro:'in'}),
+      sheetEsAhorro: s.sheet === 'ahorro',
+      hayAhorroMovs: !!s.ahorroMovs.length,
+      ahorroHist: s.ahorroMovs.slice(0, 4).map(a => ({
+        nombre: a.nombre, fecha: a.fecha,
+        signo: (a.tipo === 'out' ? '-' : '+') + money(a.monto),
+        signoStyle: 'font:600 13px "Space Grotesk",sans-serif;color:' + (a.tipo === 'out' ? '#FF6B74' : '#4FD07E'),
+        iconStyle: 'width:26px;height:26px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;'
+          + 'font:700 13px "Space Grotesk",sans-serif;'
+          + (a.tipo === 'out' ? 'background:rgba(255,58,70,.12);color:#FF6B74' : 'background:rgba(79,208,126,.12);color:#4FD07E'),
+        glyph: a.tipo === 'out' ? '\u2193' : '\u2191'
+      })),
+      tiposAhorro: [{id:'in', label:'Ingreso'}, {id:'out', label:'Retiro'}].map(o => ({
+        label: o.label,
+        onPick: () => this.setState({tipoAhorro:o.id}),
+        style: 'flex:1;padding:9px 14px;border-radius:12px;text-align:center;font:500 12.5px "IBM Plex Sans",sans-serif;cursor:pointer;transition:all .18s;'
+          + (s.tipoAhorro === o.id
+            ? (o.id === 'out' ? 'background:rgba(255,58,70,.14);color:#FF6B74;border:1px solid rgba(255,58,70,.32)'
+                              : 'background:rgba(79,208,126,.14);color:#4FD07E;border:1px solid rgba(79,208,126,.32)')
+            : 'background:#1B1B20;color:#9A9AA4;border:1px solid #292930')
+      })),
       proximoPago: (() => {
         if (!s.tarjetas.length) return 'Sin tarjetas registradas';
         const prox = s.tarjetas.map(t => ({t, dias: ((t.pago - 18) + 30) % 30})).sort((a,b) => a.dias - b.dias)[0];
