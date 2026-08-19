@@ -275,7 +275,7 @@ input:focus{outline:none;border-color:#FF3A46 !important}
         <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">
           <div>
             <div style="font:700 30px/1.05 'Space Grotesk',sans-serif;color:#F7F7F8;letter-spacing:-.02em">Dinero</div>
-            <div style="font:400 13px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:4px">Agosto · ciclo hasta el 15 de sept</div>
+            <div style="font:400 13px 'IBM Plex Sans',sans-serif;color:#75757F;margin-top:4px">{{ cicloTxt }}</div>
           </div>
           <div sc-camel-on-click="{{ togglePrivacidad }}" style="width:36px;height:36px;border-radius:11px;background:#17171B;border:1px solid #26262C;display:flex;align-items:center;justify-content:center;cursor:pointer">
             <svg width="17" height="17" sc-camel-view-box="0 0 20 20" fill="none"><path d="M1.5 10S4.5 4.5 10 4.5 18.5 10 18.5 10 15.5 15.5 10 15.5 1.5 10 1.5 10Z" stroke="#B9B9C2" stroke-width="1.5"></path><circle cx="10" cy="10" r="2.6" stroke="#B9B9C2" stroke-width="1.5"></circle></svg>
@@ -344,7 +344,7 @@ input:focus{outline:none;border-color:#FF3A46 !important}
                 </div>
                 <div style="{{ t.hoyStyle }}">
                   <div style="width:12px;height:12px;border-radius:50%;background:var(--acc,#FF3A46);animation:pulseRing 2.4s infinite"></div>
-                  <span style="font:600 10px 'IBM Plex Sans',sans-serif;color:#FF6B74;margin-top:6px">Hoy 18</span>
+                  <span style="font:600 10px 'IBM Plex Sans',sans-serif;color:#FF6B74;margin-top:6px">Hoy {{ hoyDia }}</span>
                 </div>
                 <div style="position:absolute;top:4px;right:0;display:flex;flex-direction:column;align-items:flex-end">
                   <div style="width:12px;height:12px;border-radius:50%;background:#141417;border:2.5px solid #4B4B55"></div>
@@ -691,7 +691,7 @@ input:focus{outline:none;border-color:#FF3A46 !important}
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
             <div>
               <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Fecha</div>
-              <input value="{{ entidadInput }}" sc-camel-on-change="{{ setEntidad }}" placeholder="18 ago" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px">
+              <input value="{{ entidadInput }}" sc-camel-on-change="{{ setEntidad }}" type="date" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px;color-scheme:dark">
             </div>
             <div>
               <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Cómo</div>
@@ -727,7 +727,7 @@ input:focus{outline:none;border-color:#FF3A46 !important}
             </div>
             <div>
               <div style="font:500 11px 'IBM Plex Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#75757F;margin-bottom:8px">Fecha</div>
-              <input value="{{ entidadInput }}" sc-camel-on-change="{{ setEntidad }}" placeholder="18 ago" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px">
+              <input value="{{ entidadInput }}" sc-camel-on-change="{{ setEntidad }}" type="date" style="width:100%;height:48px;border-radius:14px;background:#1B1B20;border:1px solid #292930;color:#F0F0F3;font-size:15px;padding:0 15px;color-scheme:dark">
             </div>
           </div>
         </div>
@@ -847,6 +847,35 @@ input:focus{outline:none;border-color:#FF3A46 !important}
 <script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900},&quot;acento&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FF3A46&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#FF3A46&quot;,&quot;#E8452F&quot;,&quot;#D42A5B&quot;,&quot;#FF6B4A&quot;],&quot;section&quot;:&quot;Estilo&quot;}}">
 const F = n => '$' + Math.round(n).toLocaleString('es-CO');
 
+const MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const MESES_LARGO = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const DIAS_LARGO = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const diaPlural = d => /s$/.test(d) ? d : d + 's';
+const MES_IDX = {ene:0,feb:1,mar:2,abr:3,may:4,jun:5,jul:6,ago:7,sep:8,sept:8,oct:9,nov:10,dic:11};
+
+const ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
+const ymd = d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+const parseISO = iso => { const p = String(iso).split('-'); return new Date(+p[0], +p[1]-1, +p[2]); };
+const mesDe = iso => String(iso).slice(0,7);
+// '2026-08-15' -> '15 ago'
+const fechaCorta = iso => { const d = parseISO(iso); return d.getDate() + ' ' + MESES[d.getMonth()]; };
+// '2026-08-30' -> '30 de agosto'
+const fechaLargaDe = iso => { const d = parseISO(iso); return d.getDate() + ' de ' + MESES_LARGO[d.getMonth()]; };
+const diasHasta = (iso, hoy) => Math.round((parseISO(iso) - parseISO(hoy)) / 86400000);
+
+// Convierte el formato viejo ('15 ago', '30 de ago') a ISO. Devuelve fb si no puede.
+const aISO = (v, fb, anio) => {
+  if (!v) return fb;
+  const t = String(v).trim();
+  if (ISO_RE.test(t)) return t;
+  const mt = t.match(/(\d{1,2})\s*(?:de\s+)?([a-zA-ZáéíóúÁÉÍÓÚ]+)/);
+  if (!mt) return fb;
+  const nom = mt[2].toLowerCase();
+  const mi = MES_IDX[nom.slice(0,4)] !== undefined ? MES_IDX[nom.slice(0,4)] : MES_IDX[nom.slice(0,3)];
+  if (mi === undefined) return fb;
+  return ymd(new Date(anio, mi, parseInt(mt[1], 10)));
+};
+
 class Component extends DCLogic {
   state = {
     tab: 'hoy', detalle: null, sheet: null, editId: null,
@@ -863,7 +892,7 @@ class Component extends DCLogic {
     expandidos: {}, tarjetasAbiertas: {}, corte: '', pagoDia: '', tarjetaSel: null,
     tarjetas: [
       {id:'t1', nombre:'Visa Bancolombia', ultimos:'4417', cupo:2000000, base:788000, corte:15, pago:30, abonos:[
-        {id:'a1', monto:300000, fecha:'16 ago', concepto:'PSE'}
+        {id:'a1', monto:300000, fecha:'2026-08-16', concepto:'PSE'}
       ]},
       {id:'t2', nombre:'Mastercard Nu', ultimos:'8102', cupo:1200000, base:430000, corte:20, pago:5, abonos:[]}
     ],
@@ -876,31 +905,31 @@ class Component extends DCLogic {
       {id:'c6', nombre:'Suscripciones', limite:70000, color:'#6B6B78'}
     ],
     movs: [
-      {id:'m1', catId:'c1', nombre:'Cena con Ana', monto:96000, fecha:'16 ago', medio:'t1'},
-      {id:'m2', catId:'c1', nombre:'Domicilio Rappi', monto:52000, fecha:'12 ago'},
-      {id:'m3', catId:'c1', nombre:'Almuerzo Crepes', monto:38000, fecha:'8 ago'},
-      {id:'m4', catId:'c2', nombre:'Mercado quincena', monto:98000, fecha:'15 ago'},
-      {id:'m5', catId:'c2', nombre:'Frutas plaza', monto:24000, fecha:'11 ago'},
-      {id:'m6', catId:'c2', nombre:'Panadería', monto:20000, fecha:'7 ago'},
-      {id:'m7', catId:'c3', nombre:'Gasolina', monto:45000, fecha:'14 ago'},
-      {id:'m8', catId:'c3', nombre:'Uber noche', monto:19000, fecha:'10 ago'},
-      {id:'m9', catId:'c4', nombre:'Cine con Andrés', monto:28000, fecha:'17 ago', medio:'t1'},
-      {id:'m10', catId:'c4', nombre:'Cervezas viernes', monto:20000, fecha:'9 ago'},
-      {id:'m11', catId:'c5', nombre:'Mensualidad gimnasio', monto:45000, fecha:'2 ago'},
-      {id:'m12', catId:'c6', nombre:'Netflix', monto:26900, fecha:'5 ago'},
-      {id:'m13', catId:'c6', nombre:'Spotify', monto:16900, fecha:'5 ago'},
-      {id:'m14', catId:'c6', nombre:'iCloud', monto:9200, fecha:'3 ago'}
+      {id:'m1', catId:'c1', nombre:'Cena con Ana', monto:96000, fecha:'2026-08-16', medio:'t1'},
+      {id:'m2', catId:'c1', nombre:'Domicilio Rappi', monto:52000, fecha:'2026-08-12'},
+      {id:'m3', catId:'c1', nombre:'Almuerzo Crepes', monto:38000, fecha:'2026-08-08'},
+      {id:'m4', catId:'c2', nombre:'Mercado quincena', monto:98000, fecha:'2026-08-15'},
+      {id:'m5', catId:'c2', nombre:'Frutas plaza', monto:24000, fecha:'2026-08-11'},
+      {id:'m6', catId:'c2', nombre:'Panadería', monto:20000, fecha:'2026-08-07'},
+      {id:'m7', catId:'c3', nombre:'Gasolina', monto:45000, fecha:'2026-08-14'},
+      {id:'m8', catId:'c3', nombre:'Uber noche', monto:19000, fecha:'2026-08-10'},
+      {id:'m9', catId:'c4', nombre:'Cine con Andrés', monto:28000, fecha:'2026-08-17', medio:'t1'},
+      {id:'m10', catId:'c4', nombre:'Cervezas viernes', monto:20000, fecha:'2026-08-09'},
+      {id:'m11', catId:'c5', nombre:'Mensualidad gimnasio', monto:45000, fecha:'2026-08-02'},
+      {id:'m12', catId:'c6', nombre:'Netflix', monto:26900, fecha:'2026-08-05'},
+      {id:'m13', catId:'c6', nombre:'Spotify', monto:16900, fecha:'2026-08-05'},
+      {id:'m14', catId:'c6', nombre:'iCloud', monto:9200, fecha:'2026-08-03'}
     ],
     prestamos: [
-      {id:'p1', nombre:'Andrés', entidad:'Le presté para el arriendo', cuota:150000, total:4, pagadas:1, pagadoMes:false, vence:'30 de ago'},
-      {id:'p2', nombre:'Mi hermana', entidad:'Mercado de julio', cuota:120000, total:3, pagadas:1, pagadoMes:true, vence:'5 de sept'},
-      {id:'p3', nombre:'Camilo', entidad:'Repuestos de la moto', cuota:200000, total:2, pagadas:0, pagadoMes:false, vence:'28 de ago'}
+      {id:'p1', nombre:'Andrés', entidad:'Le presté para el arriendo', cuota:150000, total:4, pagadas:1, pagadoMes:false, vence:'2026-08-30'},
+      {id:'p2', nombre:'Mi hermana', entidad:'Mercado de julio', cuota:120000, total:3, pagadas:1, pagadoMes:true, vence:'2026-09-05'},
+      {id:'p3', nombre:'Camilo', entidad:'Repuestos de la moto', cuota:200000, total:2, pagadas:0, pagadoMes:false, vence:'2026-08-28'}
     ],
     ahorroBase: 3340000,
     meta: 6000000,
     ahorroMovs: [
-      {id:'s1', tipo:'in', nombre:'Quincena de agosto', monto:600000, fecha:'15 ago'},
-      {id:'s2', tipo:'in', nombre:'Venta de la bici', monto:240000, fecha:'8 ago'}
+      {id:'s1', tipo:'in', nombre:'Quincena de agosto', monto:600000, fecha:'2026-08-15'},
+      {id:'s2', tipo:'in', nombre:'Venta de la bici', monto:240000, fecha:'2026-08-08'}
     ]
   };
 
@@ -912,6 +941,12 @@ class Component extends DCLogic {
         const s = {};
         ['habits','cats','movs','prestamos','tarjetas','ahorroMovs'].forEach(k => { if (Array.isArray(d[k])) s[k] = d[k]; });
         ['ahorroBase','meta'].forEach(k => { if (typeof d[k] === 'number' && isFinite(d[k])) s[k] = d[k]; });
+        // Datos guardados antes de la migración traen fechas tipo '15 ago'.
+        const hoy = ymd(new Date()), anio = new Date().getFullYear();
+        if (s.movs) s.movs = s.movs.map(x => ({...x, fecha: aISO(x.fecha, hoy, anio)}));
+        if (s.ahorroMovs) s.ahorroMovs = s.ahorroMovs.map(x => ({...x, fecha: aISO(x.fecha, hoy, anio)}));
+        if (s.tarjetas) s.tarjetas = s.tarjetas.map(t => ({...t, abonos: (t.abonos || []).map(a => ({...a, fecha: aISO(a.fecha, hoy, anio)}))}));
+        if (s.prestamos) s.prestamos = s.prestamos.map(x => ({...x, vence: aISO(x.vence, hoy, anio)}));
         if (Object.keys(s).length) this.setState(s);
       }
     } catch (e) {}
@@ -954,28 +989,33 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     const m = s.mounted;
+    const HOY = new Date();
+    const hoy = ymd(HOY);
+    const mesHoy = mesDe(hoy);
+    const finDeMes = new Date(HOY.getFullYear(), HOY.getMonth()+1, 0).getDate();
+    const esteMes = x => mesDe(x.fecha) === mesHoy;
     const done = s.habits.filter(h => h.done).length;
     const total = s.habits.length || 1;
     const libre = s.cats.reduce((a,c) => a + c.limite, 0) || 1;
-    const gastoDe = id => s.movs.filter(x => x.catId === id).reduce((a,x) => a + x.monto, 0);
-    const gastado = s.movs.reduce((a,x) => a + x.monto, 0);
+    const gastoDe = id => s.movs.filter(x => x.catId === id && esteMes(x)).reduce((a,x) => a + x.monto, 0);
+    const gastado = s.movs.filter(esteMes).reduce((a,x) => a + x.monto, 0);
     const borrarMov = id => () => {
       const mv = s.movs.find(x => x.id === id);
       this.setState({movs: s.movs.filter(x => x.id !== id)});
       if (mv) this.toast(mv.nombre + ' eliminado');
     };
-    const dias = 13;
+    const dias = Math.max(1, finDeMes - HOY.getDate());
     const restante = Math.max(0, libre - gastado);
     const priv = s.privado;
     const money = v => priv ? '••••' : F(v);
 
     const sumaAhorro = f => s.ahorroMovs.filter(f).reduce((a, x) => a + x.monto, 0);
     const saldoAhorro = Math.max(0, s.ahorroBase + sumaAhorro(a => a.tipo === 'in') - sumaAhorro(a => a.tipo === 'out'));
-    const aporteMes = sumaAhorro(a => a.tipo === 'in' && /ago/.test(a.fecha)) - sumaAhorro(a => a.tipo === 'out' && /ago/.test(a.fecha));
+    const aporteMes = sumaAhorro(a => a.tipo === 'in' && esteMes(a)) - sumaAhorro(a => a.tipo === 'out' && esteMes(a));
     const pctAhorro = Math.min(100, Math.round(saldoAhorro / (s.meta || 1) * 100));
     const deudaPrestamos = s.prestamos.reduce((a,p) => a + (p.total - p.pagadas) * p.cuota, 0);
-    const compras = id => s.movs.filter(x => x.medio === id).reduce((a,x) => a + x.monto, 0);
-    const saldoDe = t => Math.max(0, t.base + compras(t.id) - t.abonos.reduce((a,x) => a + x.monto, 0));
+    const compras = id => s.movs.filter(x => x.medio === id && esteMes(x)).reduce((a,x) => a + x.monto, 0);
+    const saldoDe = t => Math.max(0, t.base + compras(t.id) - t.abonos.filter(esteMes).reduce((a,x) => a + x.monto, 0));
     const nombreMedio = id => {
       const t = s.tarjetas.find(x => x.id === id);
       return t ? t.nombre : 'Efectivo / débito';
@@ -1041,12 +1081,12 @@ class Component extends DCLogic {
         if (!v || !n) return;
         const cat = s.cats.find(c => c.nombre === s.cat) || s.cats[0];
         if (!cat) return;
-        this.setState({movs: [{id:'m'+Date.now(), catId:cat.id, nombre:n, monto:v, fecha:'18 ago', medio:s.medio}, ...s.movs], sheet:null, monto:'', nombre:''});
+        this.setState({movs: [{id:'m'+Date.now(), catId:cat.id, nombre:n, monto:v, fecha:hoy, medio:s.medio}, ...s.movs], sheet:null, monto:'', nombre:''});
         this.toast(n + ' · ' + F(v) + ' con ' + nombreMedio(s.medio));
       } else if (t === 'abono') {
         const v = parseFloat(s.limite);
         if (!v || !s.tarjetaSel) return;
-        const fecha = s.entidad.trim() || '18 ago';
+        const fecha = s.entidad.trim() || hoy;
         const concepto = s.nombre.trim() || 'Abono';
         const tarjetas = s.tarjetas.map(c => {
           if (c.id !== s.tarjetaSel) return c;
@@ -1062,7 +1102,7 @@ class Component extends DCLogic {
         if (!v) return;
         const esIn = s.tipoAhorro !== 'out';
         const n = s.nombre.trim() || (esIn ? 'Ingreso' : 'Retiro');
-        this.setState({ahorroMovs: [{id:'s'+Date.now(), tipo: esIn ? 'in' : 'out', nombre:n, monto:v, fecha: s.entidad.trim() || '18 ago'}, ...s.ahorroMovs], sheet:null});
+        this.setState({ahorroMovs: [{id:'s'+Date.now(), tipo: esIn ? 'in' : 'out', nombre:n, monto:v, fecha: s.entidad.trim() || hoy}, ...s.ahorroMovs], sheet:null});
         this.toast(esIn ? 'Ahorraste ' + F(v) : 'Retiraste ' + F(v));
       } else if (t === 'tarjeta') {
         const n = s.nombre.trim(), cupo = parseFloat(s.limite);
@@ -1098,7 +1138,7 @@ class Component extends DCLogic {
       } else if (t === 'prestamo') {
         const n = s.nombre.trim(), cuota = parseFloat(s.limite), nc = parseInt(s.numCuotas, 10);
         if (!n || !cuota || !nc) return;
-        this.setState({prestamos: [...s.prestamos, {id:'p'+Date.now(), nombre:n, entidad:s.entidad.trim() || 'Préstamo personal', cuota, total:nc, pagadas:0, pagadoMes:false, vence:'30 de ago'}], sheet:null});
+        this.setState({prestamos: [...s.prestamos, {id:'p'+Date.now(), nombre:n, entidad:s.entidad.trim() || 'Préstamo personal', cuota, total:nc, pagadas:0, pagadoMes:false, vence: ymd(new Date(HOY.getFullYear(), HOY.getMonth(), finDeMes))}], sheet:null});
         this.toast(n + ' te debe ' + F(cuota * nc));
       }
     };
@@ -1106,28 +1146,43 @@ class Component extends DCLogic {
     return {
       theme: {display:'contents', '--acc': this.props.acento ?? '#FF3A46'},
       isHoy: s.tab === 'hoy', isHabitos: s.tab === 'habitos', isDinero: s.tab === 'dinero', isStats: s.tab === 'stats',
-      fechaLarga: 'Martes 18 de agosto',
+      fechaLarga: DIAS_LARGO[HOY.getDay()] + ' ' + fechaLargaDe(hoy),
       doneCount: done, totalCount: s.habits.length,
       ringOffset: m ? 245 - 245 * (done/total) : 245,
       ringTitulo: done === s.habits.length ? 'Día completo' : (s.habits.length - done) + ' hábitos por cerrar',
-      ringSub: done === s.habits.length ? 'Cerraste todo lo de hoy. Mañana empieza otra racha.' : 'Vas mejor que el 68% de tus martes. El gimnasio es el que más te cuesta.',
+      ringSub: done === s.habits.length ? 'Cerraste todo lo de hoy. Mañana empieza otra racha.' : 'Vas mejor que el 68% de tus ' + diaPlural(DIAS_LARGO[HOY.getDay()]) + '. El gimnasio es el que más te cuesta.',
       semana: [1,1,0,1,1,0,0].map((v,i) => ({dotStyle: 'width:22px;height:5px;border-radius:3px;background:' + (i === 4 ? 'var(--acc,#FF3A46)' : v ? '#3A3A44' : '#22222A')})),
       goDinero: () => this.setState({tab:'dinero'}),
       gastarHoy: priv ? '••••' : F(restante/dias),
       libreUsadoPct: m ? Math.min(100, Math.round(gastado/libre*100)) + '%' : '0%',
       libreRestante: money(restante), diasRestantes: dias,
       habitRows: s.habits.map(habitRow),
-      alertas: [
-        {titulo:'Pago de tarjeta', sub:'Fecha límite el 30 de agosto', tag:'12 días',
-         dotStyle:'width:8px;height:8px;border-radius:50%;background:#FF3A46;box-shadow:0 0 10px rgba(255,58,70,.8)',
-         tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#FF6B74;padding:4px 9px;border-radius:8px;background:rgba(255,58,70,.12)'},
-        {titulo:'Restaurantes al 93%', sub:'$186.000 de $200.000 este ciclo', tag:'$14.000',
-         dotStyle:'width:8px;height:8px;border-radius:50%;background:#FF7A62',
-         tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#E0A08E;padding:4px 9px;border-radius:8px;background:rgba(255,122,98,.12)'},
-        {titulo:'Camilo no te ha pagado', sub:'Quedó de abonar el 28 de agosto', tag:'$200.000',
-         dotStyle:'width:8px;height:8px;border-radius:50%;background:#8B8B95',
-         tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#B9B9C2;padding:4px 9px;border-radius:8px;background:#1E1E24'}
-      ],
+      alertas: (() => {
+        const out = [];
+        const prox = s.tarjetas.map(t => ({t, dias: ((t.pago - HOY.getDate()) + 30) % 30})).sort((a,b) => a.dias - b.dias)[0];
+        if (prox) out.push({
+          titulo:'Pago de tarjeta',
+          sub:'Fecha límite el ' + prox.t.pago + ' de ' + MESES_LARGO[(HOY.getMonth() + (prox.t.pago < HOY.getDate() ? 1 : 0)) % 12],
+          tag: prox.dias + (prox.dias === 1 ? ' día' : ' días'),
+          dotStyle:'width:8px;height:8px;border-radius:50%;background:#FF3A46;box-shadow:0 0 10px rgba(255,58,70,.8)',
+          tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#FF6B74;padding:4px 9px;border-radius:8px;background:rgba(255,58,70,.12)'});
+        const apretada = s.cats.map(c => ({c, g: gastoDe(c.id)}))
+          .filter(x => x.c.limite && x.g / x.c.limite >= 0.8).sort((a,b) => b.g/b.c.limite - a.g/a.c.limite)[0];
+        if (apretada) out.push({
+          titulo: apretada.c.nombre + ' al ' + Math.round(apretada.g / apretada.c.limite * 100) + '%',
+          sub: F(apretada.g) + ' de ' + F(apretada.c.limite) + ' este ciclo',
+          tag: F(Math.max(0, apretada.c.limite - apretada.g)),
+          dotStyle:'width:8px;height:8px;border-radius:50%;background:#FF7A62',
+          tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#E0A08E;padding:4px 9px;border-radius:8px;background:rgba(255,122,98,.12)'});
+        const debe = s.prestamos.filter(x => !x.pagadoMes).sort((a,b) => parseISO(a.vence) - parseISO(b.vence))[0];
+        if (debe) out.push({
+          titulo: debe.nombre + ' no te ha pagado',
+          sub: 'Quedó de abonar el ' + fechaLargaDe(debe.vence),
+          tag: F(debe.cuota),
+          dotStyle:'width:8px;height:8px;border-radius:50%;background:#8B8B95',
+          tagStyle:'font:600 11px "Space Grotesk",sans-serif;color:#B9B9C2;padding:4px 9px;border-radius:8px;background:#1E1E24'});
+        return out;
+      })(),
       noDetalle: !s.detalle, hayDetalle: !!s.detalle, sinHabitos: s.habits.length === 0,
       resumenSemana: s.habits.length + ' hábitos activos · 78% de constancia esta semana',
       abrirNuevoHabito: abrir('habito'),
@@ -1154,17 +1209,19 @@ class Component extends DCLogic {
         onDelete: () => this.borrarHabito(det.id)
       } : null,
       togglePrivacidad: () => this.setState({privado: !priv}),
+      hoyDia: HOY.getDate(),
+      cicloTxt: (MESES_LARGO[HOY.getMonth()].charAt(0).toUpperCase() + MESES_LARGO[HOY.getMonth()].slice(1)) + ' · ciclo hasta el ' + finDeMes + ' de ' + MESES_LARGO[HOY.getMonth()],
       montoStyle: 'font:700 19px "Space Grotesk",sans-serif;color:#F0F0F3;letter-spacing:-.02em',
       montoGrandeStyle: 'font:700 25px "Space Grotesk",sans-serif;color:#F7F7F8;letter-spacing:-.02em',
       disponible: money(1284000), deudaTarjeta: money(tarjeta), deudaTotal: money(tarjeta + deudaPrestamos),
       ahorro: money(saldoAhorro), metaAhorro: F(s.meta), aporteMes: (aporteMes < 0 ? '-' : '+') + money(Math.abs(aporteMes)),
       ahorroPct: m ? pctAhorro + '%' : '0%',
       ahorroPctTxt: pctAhorro + '% de la meta',
-      abrirAhorro: abrir('ahorro', {tipoAhorro:'in'}),
+      abrirAhorro: abrir('ahorro', {tipoAhorro:'in', entidad:hoy}),
       sheetEsAhorro: s.sheet === 'ahorro',
       hayAhorroMovs: !!s.ahorroMovs.length,
       ahorroHist: s.ahorroMovs.slice(0, 4).map(a => ({
-        nombre: a.nombre, fecha: a.fecha,
+        nombre: a.nombre, fecha: fechaCorta(a.fecha),
         signo: (a.tipo === 'out' ? '-' : '+') + money(a.monto),
         signoStyle: 'font:600 13px "Space Grotesk",sans-serif;color:' + (a.tipo === 'out' ? '#FF6B74' : '#4FD07E'),
         iconStyle: 'width:26px;height:26px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;'
@@ -1183,7 +1240,7 @@ class Component extends DCLogic {
       })),
       proximoPago: (() => {
         if (!s.tarjetas.length) return 'Sin tarjetas registradas';
-        const prox = s.tarjetas.map(t => ({t, dias: ((t.pago - 18) + 30) % 30})).sort((a,b) => a.dias - b.dias)[0];
+        const prox = s.tarjetas.map(t => ({t, dias: ((t.pago - HOY.getDate()) + 30) % 30})).sort((a,b) => a.dias - b.dias)[0];
         return 'Pago el ' + prox.t.pago + ' · ' + prox.dias + (prox.dias === 1 ? ' día' : ' días')
           + (s.tarjetas.length > 1 ? ' · ' + s.tarjetas.length + ' tarjetas' : '');
       })(),
@@ -1194,10 +1251,10 @@ class Component extends DCLogic {
         const pct = Math.min(100, Math.round(saldo/t.cupo*100));
         const abierto = !!s.tarjetasAbiertas[t.id];
         const span = ((t.pago - t.corte) + 30) % 30 || 30;
-        const trans = ((18 - t.corte) + 30) % 30;
+        const trans = ((HOY.getDate() - t.corte) + 30) % 30;
         const preCorte = trans > span;
         const hoyPct = preCorte ? 0 : Math.max(4, Math.min(96, Math.round(trans/span*100)));
-        const faltanCorte = ((t.corte - 18) + 30) % 30;
+        const faltanCorte = ((t.corte - HOY.getDate()) + 30) % 30;
         const abonado = t.abonos.reduce((a,x) => a + x.monto, 0);
         return {
           nombre: t.nombre, ultimos: t.ultimos, corte: t.corte, pago: t.pago, abierto,
@@ -1212,11 +1269,11 @@ class Component extends DCLogic {
           hoyStyle: preCorte ? 'display:none' : 'position:absolute;top:4px;left:' + (m ? hoyPct : 0) + '%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;transition:left 1.3s cubic-bezier(.2,.9,.25,1)',
           chevronStyle: 'transition:transform .24s cubic-bezier(.2,.9,.25,1);transform:rotate(' + (abierto ? 90 : 0) + 'deg)',
           abonos: t.abonos.map(a => ({
-            concepto: a.concepto, fecha: a.fecha, montoTxt: priv ? '••••' : F(a.monto),
+            concepto: a.concepto, fecha: fechaCorta(a.fecha), montoTxt: priv ? '••••' : F(a.monto),
             onEdit: () => this.setState({sheet:'abono', editId:a.id, tarjetaSel:t.id, nombre:a.concepto, entidad:a.fecha, limite:String(a.monto), monto:''})
           })),
           onToggle: () => this.setState({tarjetasAbiertas: {...s.tarjetasAbiertas, [t.id]: !abierto}}),
-          onAbonar: () => this.setState({sheet:'abono', editId:null, tarjetaSel:t.id, nombre:'', entidad:'18 ago', limite:'', monto:''}),
+          onAbonar: () => this.setState({sheet:'abono', editId:null, tarjetaSel:t.id, nombre:'', entidad:hoy, limite:'', monto:''}),
           onDelete: () => {
             this.setState({tarjetas: s.tarjetas.filter(x => x.id !== t.id)});
             this.toast(t.nombre + ' eliminada');
@@ -1260,7 +1317,7 @@ class Component extends DCLogic {
           nombre: p.nombre, entidad: p.entidad, total: p.total, pagado: p.pagadoMes,
           cuotaTxt: money(p.cuota), restanteTxt: money(restanteP),
           numeroCuota: Math.min(p.total, pagadasReal + (p.pagadoMes ? 0 : 1)),
-          venceTxt: p.pagadoMes ? 'Te pagó este mes' : 'Te debe pagar el ' + p.vence,
+          venceTxt: p.pagadoMes ? 'Te pagó este mes' : 'Te debe pagar el ' + fechaLargaDe(p.vence),
           venceStyle: 'font:400 11.5px "IBM Plex Sans",sans-serif;margin-top:3px;color:' + (p.pagadoMes ? '#4FD07E' : '#FF6B74'),
           cardStyle: 'padding:17px;border-radius:20px;background:#141417;border:1px solid ' + (p.pagadoMes ? '#22382A' : '#26262C') + ';animation:rowIn .3s cubic-bezier(.2,.9,.25,1);transition:border-color .3s',
           cuotas: Array.from({length: p.total}, (_, i) => ({
@@ -1298,7 +1355,7 @@ class Component extends DCLogic {
           chevronStyle: 'transition:transform .24s cubic-bezier(.2,.9,.25,1);transform:rotate(' + (abierto ? 90 : 0) + 'deg)',
           vacio: propios.length === 0,
           movs: propios.map(x => ({
-            nombre: x.nombre, fecha: x.fecha, montoTxt: priv ? '••••' : F(x.monto),
+            nombre: x.nombre, fecha: fechaCorta(x.fecha), montoTxt: priv ? '••••' : F(x.monto),
             medio: nombreMedio(x.medio),
             metaStyle: 'font:400 11px "IBM Plex Sans",sans-serif;margin-top:2px;color:' + (x.medio ? '#C7727A' : '#65656E'),
             onDelete: borrarMov(x.id),
